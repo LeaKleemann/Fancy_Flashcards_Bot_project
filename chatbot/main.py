@@ -35,26 +35,33 @@ def timer_command (update, context):
     markup=ReplyKeyboardMarkup([[KeyboardButton("25:5 Intervall")],[KeyboardButton("50:10 Intervall")]], resize_keyboard=True, one_time_keyboard=True)
     bot.send_message(chat_id=update.message.chat_id, text="Wähle das Pomodoro Intervall", reply_markup=markup)
 
-def handle_message(update,  context):
-    #print(f"Text {update} parameter {context.CallbackContext}")
-    #text=[update.message.text]
+def handle_message(update, context):
+    
     text = str(update.message.text).lower()
-    text=[text]
     print(text)
-    if text == "25:5 intervall":
-        for i in range(1):
-            bot.send_message(chat_id=update.message.chat_id, text="Timer gestartet")
-            time.sleep(25)
-            bot.send_message(chat_id=update.message.chat_id, text="Break Time!!")
-            time.sleep(10)
-            bot.send_message(chat_id=update.message.chat_id, text="Work Time")
-    else:        
-        response=R.sample_responses(text)
+    print(f"Update {update}")
+    #text=[text]
+    
+    # if text == "25:5 intervall":
+    #     for i in range(1):
+    #         bot.send_message(chat_id=update.message.chat_id, text="Timer gestartet")
+    #         time.sleep(25)
+    #         bot.send_message(chat_id=update.message.chat_id, text="Break Time!!")
+    #         time.sleep(10)
+    #         bot.send_message(chat_id=update.message.chat_id, text="Work Time")
+    #else:        
+        
+    response=R.sample_responses(text, update, context)
+
+    if response != None:
         bot.send_message(chat_id=update.message.chat_id, text=response)
-        #bot.send_message(chat_id=update.message.chat_id)
+        
 
 def error(update, context):
     print(f"Update {update} caused error {context.error}")
+
+
+
 
 def main():    
     updater=Updater(token, use_context=True)
@@ -69,9 +76,7 @@ def main():
 
     dp.add_error_handler(error)
 
-    # if update:
-    #     if message.text == "unternehmensführung":
-    #         last_command = message.text
+   
 
     updater.start_polling()
     updater.idle()
