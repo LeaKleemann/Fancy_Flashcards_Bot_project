@@ -41,15 +41,16 @@ def sample_responses(input_text, update, context):
     if user_message in ("hello", "hi", "hallo"):
                 
         bot.send_chat_action(chat_id=update.message.chat_id, action="typing")
-        time.sleep(3)
+        time.sleep(2)
         bot.send_chat_action(chat_id=update.message.chat_id, action="cancel")
                 
         bot.send_message(chat_id=update.message.chat_id, text="Hey! How is it going?")
+        
         return None
 
     if user_message in ("who are you", "who are you", "wer bist du" "wer bist du"):
         bot.send_chat_action(chat_id=update.message.chat_id, action="typing")
-        time.sleep(3)
+        time.sleep(2)
         bot.send_chat_action(chat_id=update.message.chat_id, action="cancel")
         bot.send_message(chat_id=update.message.chat_id, text="Ich bin ein Test Bot")
         return None
@@ -57,7 +58,7 @@ def sample_responses(input_text, update, context):
 
     if user_message in ("time", "time", "zeit", "zeit", "datum", "datum"):
         bot.send_chat_action(chat_id=update.message.chat_id, action="typing")
-        time.sleep(3)
+        time.sleep(2)
         bot.send_chat_action(chat_id=update.message.chat_id, action="cancel")
         now = datetime.now()
         date_time=now.strftime("%d/%m/%y, %H:%M:%S")
@@ -98,7 +99,7 @@ def timer(bot, update):
             print(" " + timer, end="\r")
             time.sleep(1)
             t-=1
-        bot.send_message(chat_id=update.message.chat_id, text="Break Time")
+        bot.send_photo(chat_id=update.message.chat_id, photo=open('./Fancy_Flashcards_Bot_project/chatbot/break_time.png', 'rb'), caption="Break Time")    
         t=10
         while t:
             mins = t // 60
@@ -107,6 +108,7 @@ def timer(bot, update):
             print(" " + timer, end="\r")
             time.sleep(1)
             t-=1
-        bot.send_message(chat_id=update.message.chat_id, text="Work Time")
+        bot.send_photo(chat_id=update.message.chat_id, photo=open('./Fancy_Flashcards_Bot_project/chatbot/work_time.png', 'rb'), caption="Work Time")
+        
     return None
     
