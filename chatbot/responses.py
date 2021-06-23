@@ -32,9 +32,9 @@ def sample_responses(input_text, update, context):
     print(input_text)
     for i in ["was", "wo", "wer", "wie", "wieso", "wofür", "wozu", "wohin", "warum", "wem", "woher","?"]:
         if i in user_message:
-            print("hallo")
-            input_text=[input_text]
-            Q.get_distance(input_text, update, bot)
+            print(user_message)
+            #input_text=[input_text]
+            Q.get_distance(user_message, update, bot)
             return None
         
     
@@ -88,10 +88,14 @@ def sample_responses(input_text, update, context):
 
     return "I don't understand you."
 
-def timer(bot, update):
-    
-    for i in range(1):
-        t=25
+def timer(update, context, data):
+    worktime=int(data['worktime'])
+    breaktime=int(data['breaktime'])
+    wiederholugnen=int(data['wiederholungen'])
+    for i in range(wiederholugnen):
+        if i==0:
+            context.bot.send_photo(chat_id=update.message.chat_id, photo=open('./Fancy_Flashcards_Bot_project/chatbot/work_time.png', 'rb'), caption="Start Working")
+        t=worktime#*60
         while t:
             mins = t // 60
             secs = t % 60
@@ -99,8 +103,11 @@ def timer(bot, update):
             print(" " + timer, end="\r")
             time.sleep(1)
             t-=1
-        bot.send_photo(chat_id=update.message.chat_id, photo=open('./Fancy_Flashcards_Bot_project/chatbot/break_time.png', 'rb'), caption="Break Time")    
-        t=10
+        if i==(wiederholugnen-1):
+            context.bot.send_photo(chat_id=update.message.chat_id, photo=open('./Fancy_Flashcards_Bot_project/chatbot/finish.png', 'rb'), caption="Finished Work")
+        else:
+            context.bot.send_photo(chat_id=update.message.chat_id, photo=open('./Fancy_Flashcards_Bot_project/chatbot/break_time.png', 'rb'), caption="Break Time")    
+        t=breaktime#*60
         while t:
             mins = t // 60
             secs = t % 60
@@ -108,7 +115,8 @@ def timer(bot, update):
             print(" " + timer, end="\r")
             time.sleep(1)
             t-=1
-        bot.send_photo(chat_id=update.message.chat_id, photo=open('./Fancy_Flashcards_Bot_project/chatbot/work_time.png', 'rb'), caption="Work Time")
+        if i !=(wiederholugnen-1):
+            context.bot.send_photo(chat_id=update.message.chat_id, photo=open('./Fancy_Flashcards_Bot_project/chatbot/work_time.png', 'rb'), caption="Work Time")
         
     return None
     
