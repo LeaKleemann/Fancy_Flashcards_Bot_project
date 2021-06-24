@@ -3,7 +3,6 @@ from telegram import *
 from telegram.ext import * 
 import responses as R
 import timer as T
-import sys
 import time
 import os
 from dotenv import load_dotenv
@@ -25,7 +24,7 @@ print ("Bot strarted ...")
 
 
 
-data = {'title': "", 'text': "", 'comments': ""}
+# data = {'title': "", 'text': "", 'comments': ""}
 TYPE=1
 TITLE = 2
 TEXT = 3
@@ -46,8 +45,11 @@ def lernen_command(update,  context):
 
 def timer_command (update, context):
     
-    markup=ReplyKeyboardMarkup([[KeyboardButton("25:5 Intervall")],[KeyboardButton("50:10 Intervall")]], resize_keyboard=True, one_time_keyboard=True)
-    bot.send_message(chat_id=update.message.chat_id, text="Wähle das Pomodoro Intervall", reply_markup=markup)
+    #markup=ReplyKeyboardMarkup([[KeyboardButton("25:5 Intervall")],[KeyboardButton("50:10 Intervall")]], resize_keyboard=True, one_time_keyboard=True)
+    #bot.send_message(chat_id=update.message.chat_id, text="Wähle das Pomodoro Intervall", reply_markup=markup)
+    x=threading.Thread(target=T.add,args=(update, context))
+    #update.message.reply_text(text="Timer Started")
+    x.start()
 
 def handle_message(update, context):
     
@@ -75,103 +77,104 @@ def error(update, context):
     print(f"Update {update} caused error {context.error}")
 
 
-data = {'type':"",'worktime': "", 'breaktime': "", 'wiederholungen': ""}
+# data = {'type':"",'worktime': "", 'breaktime': "", 'wiederholungen': ""}
 
-def add(update, context):
-    global data # to assign new dictionary to external/global variable
+# def add(update, context):
+#     global data # to assign new dictionary to external/global variable
 
-    # create new empty dictionary
-    data = {'type':"",'worktime': "", 'breaktime': "", 'wiederholungen': ""}
+#     # create new empty dictionary
+#     data = {'type':"",'worktime': "", 'breaktime': "", 'wiederholungen': ""}
 
 
-    markup=ReplyKeyboardMarkup([[KeyboardButton("25:5 Intervall, 2 Wiederholungen")],[KeyboardButton("50:10 Intervall, 2 Wiederholungen")], [KeyboardButton("Benutzerdefiniert")]], resize_keyboard=True, one_time_keyboard=True)
-    #bot.send_message(chat_id=update.message.chat_id, text="Wähle das Pomodoro Intervall", reply_markup=markup)
-    update.message.reply_text(text="Wähle das Pomodoro Intervall", reply_markup=markup)
+#     markup=ReplyKeyboardMarkup([[KeyboardButton("25:5 Intervall, 2 Wiederholungen")],[KeyboardButton("50:10 Intervall, 2 Wiederholungen")], [KeyboardButton("Benutzerdefiniert")]], resize_keyboard=True, one_time_keyboard=True)
+#     #bot.send_message(chat_id=update.message.chat_id, text="Wähle das Pomodoro Intervall", reply_markup=markup)
+#     update.message.reply_text(text="Wähle das Pomodoro Intervall", reply_markup=markup)
 
-    # next state in conversation 
-    return TYPE
+#     # next state in conversation 
+#     return TYPE
 
-def get_type(update,context):
-    if update.message.text == "50:10 Intervall, 2 Wiederholungen":
-        data2={'type':"50:10", 'worktime':50, 'breaktime':10, 'wiederholungen':2}
-        msg = """I got all data
-        type:{}
-        worktime: {}
-        breaktime: {}
-        wiederholungen: {}""".format(data2['type'],data2['worktime'], data2['breaktime'], data2['wiederholungen'])
+# def get_type(update,context):
+#     if update.message.text == "50:10 Intervall, 2 Wiederholungen":
+#         data2={'type':"50:10", 'worktime':50, 'breaktime':10, 'wiederholungen':2}
+#         msg = """I got all data
+#         type:{}
+#         worktime: {}
+#         breaktime: {}
+#         wiederholungen: {}""".format(data2['type'],data2['worktime'], data2['breaktime'], data2['wiederholungen'])
 
-        update.message.reply_text(msg)
-        x=threading.Thread(target=R.timer,args=(update, context, data2))
-        update.message.reply_text(text="Timer Started")
-        x.start()
+#         update.message.reply_text(msg)
+#         x=threading.Thread(target=R.timer,args=(update, context, data2))
+#         update.message.reply_text(text="Timer Started")
+#         x.start()
+#         return ConversationHandler.END
+    
+#     elif update.message.text == "25:5 Intervall, 2 Wiederholungen":
+#         data2={'type':"25:5", 'worktime':25, 'breaktime':5, 'wiederholungen':2}
+#         msg = """I got all data
+#         type:{}
+#         worktime: {}
+#         breaktime: {}
+#         wiederholungen: {}""".format(data2['type'],data2['worktime'], data2['breaktime'], data2['wiederholungen'])
+
+#         update.message.reply_text(msg)
+#         x=threading.Thread(target=R.timer,args=(update, context, data2))
+#         update.message.reply_text(text="Timer Started")
+#         x.start()
+#         return ConversationHandler.END
         
     
-    elif update.message.text == "25:5 Intervall, 2 Wiederholungen":
-        data2={'type':"25:5", 'worktime':25, 'breaktime':5, 'wiederholungen':2}
-        msg = """I got all data
-        type:{}
-        worktime: {}
-        breaktime: {}
-        wiederholungen: {}""".format(data2['type'],data2['worktime'], data2['breaktime'], data2['wiederholungen'])
-
-        update.message.reply_text(msg)
-        x=threading.Thread(target=R.timer,args=(update, context, data2))
-        update.message.reply_text(text="Timer Started")
-        x.start()
-        
     
-    
-    else:
-        data['type']=update.message.text
-        update.message.reply_text(f"type: {update.message.text}\n\nnow write worktime")
-        return TITLE
+#     else:
+#         data['type']=update.message.text
+#         update.message.reply_text(f"type: {update.message.text}\n\nnow write worktime")
+#         return TITLE
 
      
 
 
-def get_title(update, context):
-    data['worktime'] = update.message.text
+# def get_title(update, context):
+#     data['worktime'] = update.message.text
 
-    update.message.reply_text(f"worktime: {update.message.text}\n\nnow write breaktime")
+#     update.message.reply_text(f"worktime: {update.message.text}\n\nnow write breaktime")
 
-    # next state in conversation 
-    return TEXT
+#     # next state in conversation 
+#     return TEXT
 
-def get_text(update, context):
-    data['breaktime'] = update.message.text
+# def get_text(update, context):
+#     data['breaktime'] = update.message.text
 
-    update.message.reply_text(f"breaktime: {update.message.text}\n\nnow write wiederholungen")
+#     update.message.reply_text(f"breaktime: {update.message.text}\n\nnow write wiederholungen")
 
-    # next state in conversation 
-    return COMMENTS
+#     # next state in conversation 
+#     return COMMENTS
 
-def get_comments(update, context):
-    data['wiederholungen'] = update.message.text
+# def get_comments(update, context):
+#     data['wiederholungen'] = update.message.text
 
-    #update.message.reply_text(f"wiederholungen: {update.message.text}")
+#     #update.message.reply_text(f"wiederholungen: {update.message.text}")
 
-    msg = """I got all data
-type:{}
-worktime: {}
-breaktime: {}
-wiederholungen: {}""".format(data['type'],data['worktime'], data['breaktime'], data['wiederholungen'])
+#     msg = """I got all data
+# type:{}
+# worktime: {}
+# breaktime: {}
+# wiederholungen: {}""".format(data['type'],data['worktime'], data['breaktime'], data['wiederholungen'])
 
-    update.message.reply_text(msg)
-    x=threading.Thread(target=R.timer,args=(update, context, data))
-    update.message.reply_text(text="Timer Started")
-    x.start()
+#     update.message.reply_text(msg)
+#     x=threading.Thread(target=R.timer,args=(update, context, data))
+#     update.message.reply_text(text="Timer Started")
+#     x.start()
         
         
 
-    # end of conversation
-    return ConversationHandler.END
+#     # end of conversation
+#     return ConversationHandler.END
 
-def cancel(update, context):
+# def cancel(update, context):
 
-    update.message.reply_text('canceled')
+#     update.message.reply_text('canceled')
 
-    # end of conversation
-    return ConversationHandler.END
+#     # end of conversation
+#     return ConversationHandler.END
 
 
 def main():  
@@ -186,28 +189,28 @@ def main():
 
 
     my_conversation_handler = ConversationHandler(
-    entry_points=[CommandHandler('add', add)],
+    entry_points=[CommandHandler('add', T.add)],
     states={
         TYPE: [
-            CommandHandler('cancel', cancel),  # has to be before MessageHandler to catch `/cancel` as command, not as `title`
-            MessageHandler(Filters.text, get_type)
+            CommandHandler('cancel', T.cancel),  # has to be before MessageHandler to catch `/cancel` as command, not as `title`
+            MessageHandler(Filters.text, T.get_type)
         ],
         TITLE: [
-            CommandHandler('cancel', cancel),  # has to be before MessageHandler to catch `/cancel` as command, not as `title`
-            MessageHandler(Filters.text, get_title)
+            CommandHandler('cancel', T.cancel),  # has to be before MessageHandler to catch `/cancel` as command, not as `title`
+            MessageHandler(Filters.text, T.get_title)
         ],
         TEXT: [
-            CommandHandler('cancel', cancel),  # has to be before MessageHandler to catch `/cancel` as command, not as `text`
-            MessageHandler(Filters.text, get_text)
+            CommandHandler('cancel', T.cancel),  # has to be before MessageHandler to catch `/cancel` as command, not as `text`
+            MessageHandler(Filters.text, T.get_text)
         ],
         COMMENTS: [
-            CommandHandler('cancel', cancel),  # has to be before MessageHandler to catch `/cancel` as command, not as `comments`
-            MessageHandler(Filters.text, get_comments)
+            CommandHandler('cancel', T.cancel),  # has to be before MessageHandler to catch `/cancel` as command, not as `comments`
+            MessageHandler(Filters.text, T.get_comments)
         ],
     },
-    fallbacks=[CommandHandler('cancel', cancel)]
+    fallbacks=[CommandHandler('cancel', T.cancel)]
     )                
-
+#x=threading.Thread(target=R.timer,args=(update, context, data))
     dp.add_handler(my_conversation_handler)
     dp.add_handler(CommandHandler("start", start_command))
     dp.add_handler(CommandHandler("help", help_command))

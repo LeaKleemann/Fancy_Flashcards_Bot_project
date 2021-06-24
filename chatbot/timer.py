@@ -1,4 +1,20 @@
+from telegram import *
+from telegram.ext import * 
+import responses as R
+import timer as T
+import time
+import os
+import threading
+
+token="1837522537:AAF0zbRUBKS3sl-0eQit2lweE5UKH7Vjh-0"
+# initilize bot
+#bot=Bot(token)
+
 data = {'type':"",'worktime': "", 'breaktime': "", 'wiederholungen': ""}
+TYPE=1
+TITLE = 2
+TEXT = 3
+COMMENTS = 4
 
 def add(update, context):
     global data # to assign new dictionary to external/global variable
@@ -27,7 +43,7 @@ def get_type(update,context):
         x=threading.Thread(target=R.timer,args=(update, context, data2))
         update.message.reply_text(text="Timer Started")
         x.start()
-        
+        return ConversationHandler.END
     
     elif update.message.text == "25:5 Intervall, 2 Wiederholungen":
         data2={'type':"25:5", 'worktime':25, 'breaktime':5, 'wiederholungen':2}
@@ -41,7 +57,7 @@ def get_type(update,context):
         x=threading.Thread(target=R.timer,args=(update, context, data2))
         update.message.reply_text(text="Timer Started")
         x.start()
-        
+        return ConversationHandler.END
     
     
     else:
