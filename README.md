@@ -16,6 +16,6 @@ In Python implementierter Telegram Chatbot zum lernen. Der Chatbot verwendet im 
 ## Verwendete Modelle
 - Sentence Transformer
 
-## Requierments 
+## Requirements 
 
 ## Bot starten
