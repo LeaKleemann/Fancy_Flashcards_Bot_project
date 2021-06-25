@@ -2,6 +2,8 @@
 
 In Python implementierter Telegram Chatbot zum lernen. Der Chatbot verwendet im Hintergrund die verfügbaren Decks der Fancy Flashcards.
 
+Verteilung der Aufgaben:
+
 - Lea: NLP - Überprüfung der Antwort 
 
 - Tamara: NLP - Beantwortung von Fragen
@@ -19,3 +21,8 @@ In Python implementierter Telegram Chatbot zum lernen. Der Chatbot verwendet im 
 ## Requirements 
 
 ## Bot starten
+
+## Gruppenmitglieder
+- Lea Kleemann
+- Tamara Bucher
+- Maria Eichenlaub
