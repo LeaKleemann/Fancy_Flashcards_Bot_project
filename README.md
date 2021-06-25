@@ -12,7 +12,9 @@ In Python implementierter Telegram Chatbot zum lernen. Der Chatbot verwendet im 
 - Pythoon
 - Telegram Bot API
 - Spacy
-- 
+
+## Verwendete Modelle
+- Sentence Transformer
 
 ## Requierments 
 
