@@ -7,3 +7,13 @@ In Python implementierter Telegram Chatbot zum lernen. Der Chatbot verwendet im 
 - Tamara: NLP - Beantwortung von Fragen
 
 - Maria: Entwicklung des Telegram Chatbots
+
+## Programmiersprache und Technolgien
+- Pythoon
+- Telegram Bot API
+- Spacy
+- 
+
+## Requierments 
+
+## Bot starten
