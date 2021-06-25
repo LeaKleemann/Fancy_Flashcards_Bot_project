@@ -1,6 +1,6 @@
 # Fancy Flashcards Bot
 
-In Python implementierter Telegram Chatbot zum lernen. Der Chatbot verwendet im Hintergrund die verfügbaren Decks der Fancy Flashcards.
+In Python implementierter Telegram Chatbot zum Lernen. Der Chatbot verwendet im Hintergrund die verfügbaren Decks der Fancy Flashcards. Der Benutzer hat dabei die Möglichkeit dem Chatbot Fragen zu stellen, die von diesem bentwortet werden. Außerdem können einzelne Vorlesungen gelernt werden, indem der Chatbot zu dieser Vorlesung Fragen stellt und die gegebene Antwort validiert.
 
 Verteilung der Aufgaben:
 
@@ -11,7 +11,7 @@ Verteilung der Aufgaben:
 - Maria: Entwicklung des Telegram Chatbots
 
 ## Programmiersprache und Technolgien
-- Pythoon
+- Python
 - Telegram Bot API
 - Spacy
 
