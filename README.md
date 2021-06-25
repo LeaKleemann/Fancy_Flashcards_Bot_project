@@ -1,4 +1,4 @@
-# Fancy_Flashcards_Bot_project
+# Fancy Flashcards Bot
 
 In Python implementierter Telegram Chatbot zum lernen. Der Chatbot verwendet im Hintergrund die verfügbaren Decks der Fancy Flashcards.
 
