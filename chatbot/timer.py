@@ -16,7 +16,8 @@ TITLE = 2
 TEXT = 3
 COMMENTS = 4
 
-def add(update, context):
+def timer(update, context):
+    print(f"Update add {update}")
     global data # to assign new dictionary to external/global variable
 
     # create new empty dictionary
@@ -31,6 +32,7 @@ def add(update, context):
     return TYPE
 
 def get_type(update,context):
+    print(f"Update  get type {update}")
     if update.message.text == "50:10 Intervall, 2 Wiederholungen":
         data2={'type':"50:10", 'worktime':50, 'breaktime':10, 'wiederholungen':2}
         msg = """I got all data
@@ -69,6 +71,7 @@ def get_type(update,context):
 
 
 def get_title(update, context):
+    print(f"Update get title {update}")
     data['worktime'] = update.message.text
 
     update.message.reply_text(f"worktime: {update.message.text}\n\nnow write breaktime")
@@ -77,6 +80,7 @@ def get_title(update, context):
     return TEXT
 
 def get_text(update, context):
+    print(f"Update get text {update}")
     data['breaktime'] = update.message.text
 
     update.message.reply_text(f"breaktime: {update.message.text}\n\nnow write wiederholungen")
@@ -85,6 +89,7 @@ def get_text(update, context):
     return COMMENTS
 
 def get_comments(update, context):
+    print(f"Update get comments {update}")
     data['wiederholungen'] = update.message.text
 
     #update.message.reply_text(f"wiederholungen: {update.message.text}")
