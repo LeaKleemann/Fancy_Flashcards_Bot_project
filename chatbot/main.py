@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from Fancy_Flashcards_Bot_project.chatbot.learning import QUESTION
+#from Fancy_Flashcards_Bot_project.chatbot.learning import QUESTION
 from telegram import *
 from telegram.ext import *
 import os
@@ -82,7 +82,7 @@ def handle_message(update, context):
 
     #print(f"Update reply message {update.reply_to_message}")
     
-        
+    
     response=R.sample_responses(text, update, context)
 
     if response != None:
@@ -106,20 +106,20 @@ def main():
     #     gl_var=False
 
 
-    lernen_conversation_handler=ConversationHandler(
-    entry_points=[CommandHandler('lernen', L.lernen)],
-    states={
-        TYPE: [
-            CommandHandler('cancel', T.cancel),  # has to be before MessageHandler to catch `/cancel` as command, not as `title`
-            MessageHandler(Filters.text, L.get_type)
-        ],
-        QUESTION: [
-            CommandHandler('cancel', T.cancel),  # has to be before MessageHandler to catch `/cancel` as command, not as `title`
-            MessageHandler(Filters.text, L.get_answer)
-        ],
-    },
-    fallbacks=[CommandHandler('cancel', L.cancel)]
-    )
+    # lernen_conversation_handler=ConversationHandler(
+    # entry_points=[CommandHandler('lernen', L.lernen)],
+    # states={
+    #     TYPE: [
+    #         CommandHandler('cancel', T.cancel),  # has to be before MessageHandler to catch `/cancel` as command, not as `title`
+    #         MessageHandler(Filters.text, L.get_type)
+    #     ],
+    #     QUESTION: [
+    #         CommandHandler('cancel', T.cancel),  # has to be before MessageHandler to catch `/cancel` as command, not as `title`
+    #         MessageHandler(Filters.text, L.get_answer)
+    #     ],
+    # },
+    # fallbacks=[CommandHandler('cancel', L.cancel)]
+    # )
 
     timer_conversation_handler = ConversationHandler(
     entry_points=[CommandHandler('timer', T.timer)],
@@ -145,7 +145,7 @@ def main():
     )                
 #x=threading.Thread(target=R.timer,args=(update, context, data))
     dp.add_handler(timer_conversation_handler)
-    dp.add_handler(lernen_conversation_handler)
+    #dp.add_handler(lernen_conversation_handler)
     dp.add_handler(CommandHandler("start", start_command))
     dp.add_handler(CommandHandler("help", help_command))
     dp.add_handler(CommandHandler("lernen", lernen_command)) 

@@ -20,12 +20,14 @@ import torch
 
 cwd=pathlib.Path().cwd()
 db_file=cwd.joinpath('cards.db')
+print(db_file)
 
 engine = create_engine('sqlite:///'+db_file.as_posix(), echo=False)
+print(engine)
 
 
 def create_query(topic):
-    query='''SELECT * FROM cards WHERE topic="{}"'''.format(topic)
+    query='''SELECT * FROM cards WHERE topic="{}";'''.format(topic)
     return query
 def transform_to_tensor(l):
     translation_table = dict.fromkeys(map(ord, '[] '), None)
@@ -39,4 +41,19 @@ def read_data(engine,topic):
     df = pd.DataFrame(query)
     df['q_tensor']=df.q_tensor.transform(transform_to_tensor)
     df['a_tensor']=df.a_tensor.transform(transform_to_tensor)
+    print(df)
     return df
+
+def get_topics(engine):
+    print("func get topic")
+    querytopics='''SELECT DISTINCT topic FROM cards;'''
+    print(querytopics)
+    queryt=pd.read_sql_query(querytopics, con=engine)
+    print("queryt")
+    dft = pd.DataFrame(queryt)
+    print("dft")
+    topics=dft.topic
+    print(topics)
+    return topics
+
+#print(get_topics())
