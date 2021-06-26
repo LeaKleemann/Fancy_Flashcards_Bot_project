@@ -6,6 +6,7 @@ from telegram.ext import *
 import os
 import threading
 from dotenv import load_dotenv
+import sentence_transf as S
 
 # load token for telegram bot
 #load_dotenv()
@@ -29,12 +30,12 @@ def sample_responses(input_text, update, context):
 
 
     user_message=input_text
-    print(input_text)
+    #print(input_text)
     for i in ["was", "wo", "wer", "wie", "wieso", "wofür", "wozu", "wohin", "warum", "wem", "woher","?"]:
         if i in user_message:
             print(user_message)
             #input_text=[input_text]
-            Q.get_distance(user_message, update, bot)
+            S.get_answer(user_message, update, bot)
             return None
         
     
@@ -44,7 +45,7 @@ def sample_responses(input_text, update, context):
         time.sleep(2)
         bot.send_chat_action(chat_id=update.message.chat_id, action="cancel")
                 
-        bot.send_message(chat_id=update.message.chat_id, text="Hey! How is it going?")
+        bot.send_message(chat_id=update.message.chat_id, text="Hey! How is it going?", reply_markup=ForceReply())
         
         return None
 
