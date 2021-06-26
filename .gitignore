@@ -1,1 +1,6 @@
 .env
+*.ipynb
+wirtschaftsinformatik-main/LICENSE
+.ipynb_checkpoints/data2-checkpoint.csv
+.ipynb_checkpoints/data-checkpoint.csv
+.ipynb_checkpoints/create_database_from_files-checkpoint.py
