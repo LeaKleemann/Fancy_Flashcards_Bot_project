@@ -19,14 +19,18 @@ import pathlib2 as pathlib
 import torch
 
 cwd=pathlib.Path().cwd()
-db_file=cwd.joinpath('cards.db')
-print(db_file)
+db_file=cwd.joinpath('chatbot/cards.db')
 
-engine = create_engine('sqlite:///'+db_file.as_posix(), echo=False)
-# print(engine)
+
+# +
+# engine = create_engine('sqlite:///'+db_file.as_posix(), echo=False)
+
+# +
+# engine
+# -
 
 def create_query(topic):
-    query='''SELECT * FROM cards WHERE topic="{}";'''.format(topic)
+    query='''SELECT * FROM cards WHERE topic="{}"'''.format(topic)
     return query
 def transform_to_tensor(l):
     translation_table = dict.fromkeys(map(ord, '[] '), None)
@@ -35,24 +39,28 @@ def transform_to_tensor(l):
     l=[float(x) for x in l]
     return torch.FloatTensor(l)
 def read_data(topic):
+    engine = create_engine('sqlite:///'+db_file.as_posix(), echo=False)
+    conn=engine.connect()
     q=create_query(topic)
     query=pd.read_sql_query(create_query(topic), con=engine)
     df = pd.DataFrame(query)
     df['q_tensor']=df.q_tensor.transform(transform_to_tensor)
     df['a_tensor']=df.a_tensor.transform(transform_to_tensor)
-    print(df)
+    conn.close()
+    engine.dispose()
     return df
-
 def get_topics():
-#     print("func get topic")
+    engine = create_engine('sqlite:///'+db_file.as_posix(), echo=False)
+    conn=engine.connect()
     querytopics='''SELECT DISTINCT topic FROM cards;'''
-#     print(querytopics)
-    queryt=pd.read_sql_query(querytopics, con=engine)
-#     print("queryt")
+    queryt=pd.read_sql_query(querytopics, con=conn)
     dft = pd.DataFrame(queryt)
-#     print("dft")
     topics=dft.topic
-#     print(topics)
-    return topics
+    conn.close()
+    engine.dispose()
+    return topics  
 
-# print(get_topics())
+
+df=get_topics()
+
+df

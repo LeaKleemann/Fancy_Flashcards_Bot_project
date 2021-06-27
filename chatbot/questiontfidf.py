@@ -11,7 +11,7 @@ import threading
 
 nlp = spacy.load('de_core_news_sm')
 
-os.chdir('C:\\Studium\\Studium_Dokumente\\6. Semester\\DS Entwicklungen Projekt')
+# os.chdir('C:\\Studium\\Studium_Dokumente\\6. Semester\\DS Entwicklungen Projekt')
 
 
 all_questions=[]

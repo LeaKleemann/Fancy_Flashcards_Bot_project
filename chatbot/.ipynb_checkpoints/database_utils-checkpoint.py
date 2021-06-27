@@ -44,15 +44,15 @@ def read_data(topic):
     return df
 
 def get_topics():
-#     print("func get topic")
+    print("func get topic")
     querytopics='''SELECT DISTINCT topic FROM cards;'''
-#     print(querytopics)
+    print(querytopics)
     queryt=pd.read_sql_query(querytopics, con=engine)
-#     print("queryt")
+    print("queryt")
     dft = pd.DataFrame(queryt)
-#     print("dft")
+    print("dft")
     topics=dft.topic
-#     print(topics)
+    print(topics)
     return topics
 
 # print(get_topics())

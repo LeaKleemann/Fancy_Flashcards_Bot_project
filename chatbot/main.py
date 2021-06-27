@@ -6,7 +6,7 @@ import os
 print(os.getcwd()) 
 import responses as R
 import timer as T
-import sentence_transf as S
+# import sentence_transf as S
 import learning as L
 import time
 
@@ -59,14 +59,14 @@ def lernen_command(update,  context):
 
 
 
-def button(update: Update, context: CallbackContext) -> None:
-    """Parses the CallbackQuery and updates the message text."""
-    query = update.callback_query
+# def button(update: Update, context: CallbackContext) -> None:
+#     """Parses the CallbackQuery and updates the message text."""
+#     query = update.callback_query
     
-    query.answer()
+#     query.answer()
     
-    S.get_full_answer(query, update, bot)
-    return None
+#     S.get_full_answer(query, update, bot)
+#     return None
     
 
 
@@ -150,7 +150,7 @@ def main():
     dp.add_handler(CommandHandler("help", help_command))
     dp.add_handler(CommandHandler("lernen", lernen_command)) 
 
-    dp.add_handler(CallbackQueryHandler(button))
+    # dp.add_handler(CallbackQueryHandler(button))
 
     dp.add_handler(MessageHandler(Filters.text, handle_message))
     dp.add_error_handler(error)
