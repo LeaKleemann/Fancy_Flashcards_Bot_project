@@ -1,13 +1,18 @@
 from datetime import date, datetime
 import time 
-import questiontfidf as Q
+# import questiontfidf as Q
 from telegram import *
 from telegram.ext import * 
 import os
 import threading
 from dotenv import load_dotenv
+<<<<<<< HEAD
 #import database_utils as dbu
 import sentence_transf as S
+=======
+import database_utils as dbu
+# import sentence_transf as S
+>>>>>>> d318fee2c0436aa8793b83d28e2cf5eb179535b2
 from sqlalchemy import create_engine
 import pandas as pd
 import pathlib2 as pathlib
@@ -43,13 +48,13 @@ def sample_responses(input_text, update, context):
 
 
     user_message=input_text
-    #print(input_text)
-    for i in ["was", "wo", "wer", "wie", "wieso", "wofür", "wozu", "wohin", "warum", "wem", "woher","?"]:
-        if i in user_message:
-            print(user_message)
-            #input_text=[input_text]
-            S.get_answer(user_message, update, bot)
-            return None
+    # #print(input_text)
+    # for i in ["was", "wo", "wer", "wie", "wieso", "wofür", "wozu", "wohin", "warum", "wem", "woher","?"]:
+    #     if i in user_message:
+    #         print(user_message)
+    #         #input_text=[input_text]
+    #         S.get_answer(user_message, update, bot)
+    #         return None
         
     
     if user_message in ("hello", "hi", "hallo"):

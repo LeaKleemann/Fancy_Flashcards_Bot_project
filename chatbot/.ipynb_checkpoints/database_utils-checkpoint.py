@@ -17,22 +17,13 @@ from sqlalchemy import create_engine
 import pandas as pd
 import pathlib2 as pathlib
 import torch
-import sqlite3
 
-# cwd=pathlib.Path().cwd()
-# print(cwd)
-# db_file=cwd.joinpath('chatbot/cards.db')
-# print(db_file)
+cwd=pathlib.Path().cwd()
+db_file=cwd.joinpath('cards.db')
+print(db_file)
 
-<<<<<<< HEAD
-# engine = create_engine('sqlite:///'+db_file.as_posix(), echo=False)
-# con=engine.connect()
-# print(engine)
-
-=======
 engine = create_engine('sqlite:///'+db_file.as_posix(), echo=False)
 # print(engine)
->>>>>>> d318fee2c0436aa8793b83d28e2cf5eb179535b2
 
 def create_query(topic):
     query='''SELECT * FROM cards WHERE topic="{}";'''.format(topic)
@@ -53,45 +44,15 @@ def read_data(topic):
     return df
 
 def get_topics():
-<<<<<<< HEAD
-    topics=["business-intelligence", "Einführung Wirtschaftsinformatik", "Finanzbuchhatung", "Finanzierung und Investition", "Unternehmensführung"]
-    # print(cwd)
-    # print("func get topic")
-    # querytopics='''SELECT DISTINCT topic FROM cards;'''
-    # print(querytopics)
-    # print(engine)
-    # queryt=pd.read_sql_query(querytopics, con=con)
-    # print("queryt")
-    # dft = pd.DataFrame(queryt)
-    # print("dft")
-    # topics=dft.topic
-    # print(topics)
-    return topics
-
-#print(get_topics())
-def get_question():
-    question="Welcher Tag ist heute?"
-    return question
-
-def check_answer(answer):
-    korrektanswer="Heute ist Sonntag"
-    if answer == korrektanswer:
-        result =True
-    else:
-        result=False
-    return result,korrektanswer
-    
-=======
-#     print("func get topic")
+    print("func get topic")
     querytopics='''SELECT DISTINCT topic FROM cards;'''
-#     print(querytopics)
+    print(querytopics)
     queryt=pd.read_sql_query(querytopics, con=engine)
-#     print("queryt")
+    print("queryt")
     dft = pd.DataFrame(queryt)
-#     print("dft")
+    print("dft")
     topics=dft.topic
-#     print(topics)
+    print(topics)
     return topics
 
 # print(get_topics())
->>>>>>> d318fee2c0436aa8793b83d28e2cf5eb179535b2

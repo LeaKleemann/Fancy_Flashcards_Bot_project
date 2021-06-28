@@ -1,1 +1,7 @@
-
+python-telegram-bot
+python-dotenv
+sqlalchemy
+pandas
+pathlib2
+numpy
+sentence_transformers
