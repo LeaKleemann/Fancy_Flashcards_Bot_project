@@ -5,7 +5,7 @@ import os
 print(os.getcwd()) 
 import responses as R
 import timer as T
-# import sentence_transf as S
+#import sentence_transf as S
 import learning as L
 import time
 
@@ -37,6 +37,8 @@ COMMENTS = 4
 
 TOPIC=1
 QUESTION=2
+ANSWER=3
+#NEXT=4
 
 def start_command(update,  context):
     bot.send_message(chat_id=update.message.chat_id, text="Herzlich Willkommenn! \n Der Fancy Flashcard Bot hilft dir beim Lernen. \n Wenn du hilfe brauchst gebe /help ein. \n Du willst das Fach aus wählen gebe /lernen ein. \n Zusätzlich kannst du dir einen Timer stellen. Das geht über /timer.")
@@ -61,14 +63,14 @@ def help_command(update,  context):
 
 
 
-# def button(update: Update, context: CallbackContext) -> None:
-#     """Parses the CallbackQuery and updates the message text."""
-#     query = update.callback_query
+def button(update: Update, context: CallbackContext) -> None:
+    """Parses the CallbackQuery and updates the message text."""
+    query = update.callback_query
     
-#     query.answer()
+    query.answer()
     
-#     S.get_full_answer(query, update, bot)
-#     return None
+    S.get_full_answer(query, update, bot)
+    return None
     
 
 
@@ -111,7 +113,7 @@ def main():
     lernen_conversation_handler=ConversationHandler(
     entry_points=[CommandHandler('lernen', L.lernen)],
     states={
-        TYPE: [
+        TOPIC: [
             CommandHandler('cancel', T.cancel),  # has to be before MessageHandler to catch `/cancel` as command, not as `title`
             MessageHandler(Filters.text, L.get_type)
         ],
@@ -119,6 +121,14 @@ def main():
             CommandHandler('cancel', T.cancel),  # has to be before MessageHandler to catch `/cancel` as command, not as `title`
             MessageHandler(Filters.text, L.get_answer)
         ],
+        ANSWER: [
+            CommandHandler('cancel', T.cancel),  # has to be before MessageHandler to catch `/cancel` as command, not as `title`
+            MessageHandler(Filters.text, L.next_question)
+        ],
+        # NEXT: [
+        #     CommandHandler('cancel', T.cancel),  # has to be before MessageHandler to catch `/cancel` as command, not as `title`
+        #     MessageHandler(Filters.text, L.next_question)
+        # ],
     },
     fallbacks=[CommandHandler('cancel', L.cancel)]
     )
@@ -152,7 +162,7 @@ def main():
     dp.add_handler(CommandHandler("help", help_command))
     #dp.add_handler(CommandHandler("lernen", lernen_command)) 
 
-    # dp.add_handler(CallbackQueryHandler(button))
+    dp.add_handler(CallbackQueryHandler(button))
 
     dp.add_handler(MessageHandler(Filters.text, handle_message))
     dp.add_error_handler(error)

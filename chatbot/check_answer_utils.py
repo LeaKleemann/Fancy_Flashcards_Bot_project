@@ -16,6 +16,7 @@
 
 import pandas as pd
 import numpy as np
+import torch
 import random
 from sentence_transformers import SentenceTransformer, util
 
@@ -29,8 +30,12 @@ def get_tensor(sentence):
     return transformer.encode(sentence,convert_to_tensor=True)
 def compare_tensors(solution,answer):
     answer_tensor=get_tensor(answer)
-    cosine_score = util.pytorch_cos_sim(solution, answer_tensor)
-    return cosine_score.tolist()[0]
+    solution_tensor=get_tensor(solution)
+    cosine_score = util.pytorch_cos_sim(solution_tensor, answer_tensor)[0]
+    top_results = torch.topk(cosine_score, k=1)
+    print(cosine_score)
+    print(top_results)
+    return top_results
 def get_answer_string(score):
     if score >=0.5:
         return 'Gut gemacht! Die Ähnlichkeit zur Musterlösung beträgt {}'.format(score)

@@ -17,25 +17,22 @@ from sqlalchemy import create_engine
 import pandas as pd
 import pathlib2 as pathlib
 import torch
-import sqlite3
 
-# cwd=pathlib.Path().cwd()
-# print(cwd)
-# db_file=cwd.joinpath('chatbot/cards.db')
-# print(db_file)
 
-<<<<<<< HEAD
+cwd=pathlib.Path().cwd()
+db_file=cwd.joinpath('cards.db')
+print(db_file)
+
+
+# +
 # engine = create_engine('sqlite:///'+db_file.as_posix(), echo=False)
-# con=engine.connect()
-# print(engine)
 
-=======
-engine = create_engine('sqlite:///'+db_file.as_posix(), echo=False)
-# print(engine)
->>>>>>> d318fee2c0436aa8793b83d28e2cf5eb179535b2
+# +
+# engine
+# -
 
 def create_query(topic):
-    query='''SELECT * FROM cards WHERE topic="{}";'''.format(topic)
+    query='''SELECT * FROM cards WHERE topic="{}"'''.format(topic)
     return query
 def transform_to_tensor(l):
     translation_table = dict.fromkeys(map(ord, '[] '), None)
@@ -44,54 +41,42 @@ def transform_to_tensor(l):
     l=[float(x) for x in l]
     return torch.FloatTensor(l)
 def read_data(topic):
+    engine = create_engine('sqlite:///'+db_file.as_posix(), echo=False)
+    conn=engine.connect()
     q=create_query(topic)
     query=pd.read_sql_query(create_query(topic), con=engine)
     df = pd.DataFrame(query)
     df['q_tensor']=df.q_tensor.transform(transform_to_tensor)
     df['a_tensor']=df.a_tensor.transform(transform_to_tensor)
-    print(df)
+    conn.close()
+    engine.dispose()
     return df
-
 def get_topics():
-<<<<<<< HEAD
-    topics=["business-intelligence", "Einführung Wirtschaftsinformatik", "Finanzbuchhatung", "Finanzierung und Investition", "Unternehmensführung"]
-    # print(cwd)
-    # print("func get topic")
-    # querytopics='''SELECT DISTINCT topic FROM cards;'''
-    # print(querytopics)
-    # print(engine)
-    # queryt=pd.read_sql_query(querytopics, con=con)
-    # print("queryt")
-    # dft = pd.DataFrame(queryt)
-    # print("dft")
-    # topics=dft.topic
-    # print(topics)
-    return topics
-
-#print(get_topics())
-def get_question():
-    question="Welcher Tag ist heute?"
-    return question
-
-def check_answer(answer):
-    korrektanswer="Heute ist Sonntag"
-    if answer == korrektanswer:
-        result =True
-    else:
-        result=False
-    return result,korrektanswer
-    
-=======
-#     print("func get topic")
+    engine = create_engine('sqlite:///'+db_file.as_posix(), echo=False)
+    conn=engine.connect()
     querytopics='''SELECT DISTINCT topic FROM cards;'''
-#     print(querytopics)
-    queryt=pd.read_sql_query(querytopics, con=engine)
-#     print("queryt")
+    queryt=pd.read_sql_query(querytopics, con=conn)
     dft = pd.DataFrame(queryt)
-#     print("dft")
-    topics=dft.topic
-#     print(topics)
-    return topics
+    topics=dft.topic.tolist()
+    print(topics)
+    conn.close()
+    engine.dispose()
+    return topics  
 
-# print(get_topics())
->>>>>>> d318fee2c0436aa8793b83d28e2cf5eb179535b2
+
+df=get_topics()
+
+df
+
+def read_emd():
+    engine = create_engine('sqlite:///'+db_file.as_posix(), echo=False)
+    conn=engine.connect()
+    fquery='''SELECT * FROM cards'''
+    #q=create_query("*")
+    query=pd.read_sql_query(fquery, con=engine)
+    df = pd.DataFrame(query)
+    df['q_tensor']=df.q_tensor.transform(transform_to_tensor)
+    df['a_tensor']=df.a_tensor.transform(transform_to_tensor)
+    conn.close()
+    engine.dispose()
+    return df
