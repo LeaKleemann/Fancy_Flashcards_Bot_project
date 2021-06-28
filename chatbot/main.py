@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-#from Fancy_Flashcards_Bot_project.chatbot.learning import QUESTION
 from telegram import *
 from telegram.ext import *
 import os
@@ -36,18 +35,21 @@ TITLE = 2
 TEXT = 3
 COMMENTS = 4
 
+TOPIC=1
+QUESTION=2
+
 def start_command(update,  context):
     bot.send_message(chat_id=update.message.chat_id, text="Herzlich Willkommenn! \n Der Fancy Flashcard Bot hilft dir beim Lernen. \n Wenn du hilfe brauchst gebe /help ein. \n Du willst das Fach aus wählen gebe /lernen ein. \n Zusätzlich kannst du dir einen Timer stellen. Das geht über /timer.")
 
 def help_command(update,  context):
     bot.send_message(chat_id=update.message.chat_id, text="If you need help! You should ask for it on Google!")
 
-def lernen_command(update,  context):
+# def lernen_command(update,  context):
 
-    markup=ReplyKeyboardMarkup([[KeyboardButton("Business Intelligence")],[KeyboardButton("Unternehmensführung")], 
-     [KeyboardButton("Wirtschaftsinformatik")],[KeyboardButton("BWL") ]], resize_keyboard=True, one_time_keyboard=True)
+#     markup=ReplyKeyboardMarkup([[KeyboardButton("Business Intelligence")],[KeyboardButton("Unternehmensführung")], 
+#      [KeyboardButton("Wirtschaftsinformatik")],[KeyboardButton("BWL") ]], resize_keyboard=True, one_time_keyboard=True)
 
-    bot.send_message(chat_id=update.message.chat_id, reply_markup=markup,  text="Wähle das Fach welches du lernen möchtest \n - Business Intelligence \n - Unternehmensführung \n - Wirtschaftsinformatik \n - BWL")
+#     bot.send_message(chat_id=update.message.chat_id, reply_markup=markup,  text="Wähle das Fach welches du lernen möchtest \n - Business Intelligence \n - Unternehmensführung \n - Wirtschaftsinformatik \n - BWL")
 
 # def timer_command (update, context):
     
@@ -106,20 +108,20 @@ def main():
     #     gl_var=False
 
 
-    # lernen_conversation_handler=ConversationHandler(
-    # entry_points=[CommandHandler('lernen', L.lernen)],
-    # states={
-    #     TYPE: [
-    #         CommandHandler('cancel', T.cancel),  # has to be before MessageHandler to catch `/cancel` as command, not as `title`
-    #         MessageHandler(Filters.text, L.get_type)
-    #     ],
-    #     QUESTION: [
-    #         CommandHandler('cancel', T.cancel),  # has to be before MessageHandler to catch `/cancel` as command, not as `title`
-    #         MessageHandler(Filters.text, L.get_answer)
-    #     ],
-    # },
-    # fallbacks=[CommandHandler('cancel', L.cancel)]
-    # )
+    lernen_conversation_handler=ConversationHandler(
+    entry_points=[CommandHandler('lernen', L.lernen)],
+    states={
+        TYPE: [
+            CommandHandler('cancel', T.cancel),  # has to be before MessageHandler to catch `/cancel` as command, not as `title`
+            MessageHandler(Filters.text, L.get_type)
+        ],
+        QUESTION: [
+            CommandHandler('cancel', T.cancel),  # has to be before MessageHandler to catch `/cancel` as command, not as `title`
+            MessageHandler(Filters.text, L.get_answer)
+        ],
+    },
+    fallbacks=[CommandHandler('cancel', L.cancel)]
+    )
 
     timer_conversation_handler = ConversationHandler(
     entry_points=[CommandHandler('timer', T.timer)],
@@ -145,10 +147,10 @@ def main():
     )                
 #x=threading.Thread(target=R.timer,args=(update, context, data))
     dp.add_handler(timer_conversation_handler)
-    #dp.add_handler(lernen_conversation_handler)
+    dp.add_handler(lernen_conversation_handler)
     dp.add_handler(CommandHandler("start", start_command))
     dp.add_handler(CommandHandler("help", help_command))
-    dp.add_handler(CommandHandler("lernen", lernen_command)) 
+    #dp.add_handler(CommandHandler("lernen", lernen_command)) 
 
     dp.add_handler(CallbackQueryHandler(button))
 

@@ -17,13 +17,16 @@ from sqlalchemy import create_engine
 import pandas as pd
 import pathlib2 as pathlib
 import torch
+import sqlite3
 
-cwd=pathlib.Path().cwd()
-db_file=cwd.joinpath('cards.db')
-print(db_file)
+# cwd=pathlib.Path().cwd()
+# print(cwd)
+# db_file=cwd.joinpath('chatbot/cards.db')
+# print(db_file)
 
-engine = create_engine('sqlite:///'+db_file.as_posix(), echo=False)
-print(engine)
+# engine = create_engine('sqlite:///'+db_file.as_posix(), echo=False)
+# con=engine.connect()
+# print(engine)
 
 
 def create_query(topic):
@@ -44,16 +47,31 @@ def read_data(engine,topic):
     print(df)
     return df
 
-def get_topics(engine):
-    print("func get topic")
-    querytopics='''SELECT DISTINCT topic FROM cards;'''
-    print(querytopics)
-    queryt=pd.read_sql_query(querytopics, con=engine)
-    print("queryt")
-    dft = pd.DataFrame(queryt)
-    print("dft")
-    topics=dft.topic
-    print(topics)
+def get_topics():
+    topics=["business-intelligence", "Einführung Wirtschaftsinformatik", "Finanzbuchhatung", "Finanzierung und Investition", "Unternehmensführung"]
+    # print(cwd)
+    # print("func get topic")
+    # querytopics='''SELECT DISTINCT topic FROM cards;'''
+    # print(querytopics)
+    # print(engine)
+    # queryt=pd.read_sql_query(querytopics, con=con)
+    # print("queryt")
+    # dft = pd.DataFrame(queryt)
+    # print("dft")
+    # topics=dft.topic
+    # print(topics)
     return topics
 
 #print(get_topics())
+def get_question():
+    question="Welcher Tag ist heute?"
+    return question
+
+def check_answer(answer):
+    korrektanswer="Heute ist Sonntag"
+    if answer == korrektanswer:
+        result =True
+    else:
+        result=False
+    return result,korrektanswer
+    

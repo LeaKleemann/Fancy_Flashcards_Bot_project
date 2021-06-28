@@ -20,5 +20,5 @@ classifier = pickle.load(f)
 
 f.close()
 
-sentence="Heute ist ein schöner Tag"
+sentence="Hallo"
 print(classifier.classify(spacy_tokenizer(sentence)))

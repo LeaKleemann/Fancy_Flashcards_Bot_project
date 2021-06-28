@@ -6,7 +6,7 @@ from telegram.ext import *
 import os
 import threading
 from dotenv import load_dotenv
-import database_utils as dbu
+#import database_utils as dbu
 import sentence_transf as S
 from sqlalchemy import create_engine
 import pandas as pd
@@ -27,12 +27,12 @@ import torch
 #danachw weiter mit x.
 
 def sample_responses(input_text, update, context):
-    cwd=pathlib.Path().cwd()
-    db_file=cwd.joinpath('cards.db')
-    print(db_file)
+    # cwd=pathlib.Path().cwd()
+    # db_file=cwd.joinpath('cards.db')
+    # print(db_file)
 
-    engine = create_engine('sqlite:///'+db_file.as_posix(), echo=False)
-    print(engine)
+    # engine = create_engine('sqlite:///'+db_file.as_posix(), echo=False)
+    # print(engine)
 
     load_dotenv()
     token=os.getenv("TELEGRAM_BOT_TOKEN")
@@ -54,8 +54,8 @@ def sample_responses(input_text, update, context):
     
     if user_message in ("hello", "hi", "hallo"):
         print("func hallo")
-        topics=dbu.get_topics(engine)
-        print(topics)        
+        #topics=dbu.get_topics()
+        #print(topics)        
         bot.send_chat_action(chat_id=update.message.chat_id, action="typing")
         time.sleep(2)
         bot.send_chat_action(chat_id=update.message.chat_id, action="cancel")
