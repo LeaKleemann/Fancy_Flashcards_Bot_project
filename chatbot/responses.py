@@ -6,13 +6,8 @@ from telegram.ext import *
 import os
 import threading
 from dotenv import load_dotenv
-<<<<<<< HEAD
 #import database_utils as dbu
 import sentence_transf as S
-=======
-import database_utils as dbu
-# import sentence_transf as S
->>>>>>> d318fee2c0436aa8793b83d28e2cf5eb179535b2
 from sqlalchemy import create_engine
 import pandas as pd
 import pathlib2 as pathlib

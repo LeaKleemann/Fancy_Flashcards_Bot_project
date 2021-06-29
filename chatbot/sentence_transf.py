@@ -5,17 +5,20 @@ from telegram.ext import *
 from sentence_transformers import SentenceTransformer, util
 from telegram import ForceReply, replymarkup
 from telegram.inline.inlinekeyboardbutton import InlineKeyboardButton
+from sklearn.metrics.pairwise import cosine_similarity
 import torch
 model = SentenceTransformer('distiluse-base-multilingual-cased-v1')
 
-embeddings= np.loadtxt('Fancy_Flashcards_Bot_project\chatbot\embeddings.txt')
+embeddings= np.loadtxt('embeddings.txt')
 embeddings = embeddings.astype(np.float32)
 corpus_embeddings = torch.from_numpy(embeddings)
 
-df = pd.read_csv("Fancy_Flashcards_Bot_project\chatbot\questions_answers.csv")
+df = pd.read_csv("questions_answers.csv")
 answers=[]
 def get_answer(frage, update, bot):
-    query_embedding = model.encode(frage, convert_to_tensor=True)
+    query_embedding = model.encode(frage)
+    cosine_sim = cosine_similarity(corpus_embeddings, query_embedding)
+    max_idx=cosine_sim.argmax()
     cos_scores = util.pytorch_cos_sim(query_embedding, corpus_embeddings)[0]
     top_results = torch.topk(cos_scores, k=1)
     print(top_results[0])
