@@ -3,3 +3,6 @@
 wirtschaftsinformatik-main/LICENSE
 .ipynb_checkpoints/*
 compare_answers_dev.py
+__pycache__/*
+chatbot/__pycache__/*
+chatbot/.ipynb_checkpoints/*

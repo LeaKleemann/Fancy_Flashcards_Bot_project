@@ -7,7 +7,7 @@ import os
 import threading
 from dotenv import load_dotenv
 #import database_utils as dbu
-import sentence_transf as S
+#import sentence_transf as S
 from sqlalchemy import create_engine
 import pandas as pd
 import pathlib2 as pathlib
@@ -43,7 +43,7 @@ def sample_responses(input_text, update, context):
 
 
     user_message=input_text
-    # #print(input_text)
+    #print(input_text)
     # for i in ["was", "wo", "wer", "wie", "wieso", "wofür", "wozu", "wohin", "warum", "wem", "woher","?"]:
     #     if i in user_message:
     #         print(user_message)
@@ -101,8 +101,8 @@ def sample_responses(input_text, update, context):
         x.start()
         
         return None
-
-    return "I don't understand you."
+    bot.send_message(chat_id=update.message.chat_id, text="I don't understand you.")
+    return None
 
 def timer(update, context, data):
     worktime=int(data['worktime'])

@@ -7,13 +7,20 @@ from telegram import ForceReply, replymarkup
 from telegram.inline.inlinekeyboardbutton import InlineKeyboardButton
 from sklearn.metrics.pairwise import cosine_similarity
 import torch
-model = SentenceTransformer('distiluse-base-multilingual-cased-v1')
+import database_utils as dbu
+#model = SentenceTransformer('distiluse-base-multilingual-cased-v1')
+model = SentenceTransformer('paraphrase-multilingual-MiniLM-L12-v2')
 
-embeddings= np.loadtxt('embeddings.txt')
-embeddings = embeddings.astype(np.float32)
-corpus_embeddings = torch.from_numpy(embeddings)
+embeddings=dbu.read_emd()
 
-df = pd.read_csv("questions_answers.csv")
+corpus_embeddings=embeddings['q_tensor'].tolist()
+#corpus_embeddings = corpus_embeddings.astype(np.float32)
+#embeddings= np.loadtxt(r'embeddings.txt')
+
+#corpus_embeddings = torch.from_numpy(embeddings)
+
+#df = pd.read_csv(r"questions_answers.csv")
+
 answers=[]
 def get_answer(frage, update, bot):
     query_embedding = model.encode(frage)
@@ -23,8 +30,8 @@ def get_answer(frage, update, bot):
     top_results = torch.topk(cos_scores, k=1)
     print(top_results[0])
     if float(top_results[0]) >= 0.60:
-        answer= df["question"][int(top_results[1])]
-        an=df['answer'][int(top_results[1])] # gibt antwort zurück
+        answer= corpus_embeddings["q"][int(top_results[1])]
+        an=corpus_embeddings['a'][int(top_results[1])] # gibt antwort zurück
         answer=answer+ "\n" + an 
         bot.send_message(chat_id=update.message.chat_id, text=answer)
     else:
@@ -33,7 +40,7 @@ def get_answer(frage, update, bot):
         botanswer=""
         keyboard=[]
         for i in range(len(top_results[0])):
-            answer=df["question"][int(top_results[1][i])], str(float(top_results[0][i])), str(int(top_results[1][i]))
+            answer=corpus_embeddings["q"][int(top_results[1][i])], str(float(top_results[0][i])), str(int(top_results[1][i]))
             answers.append(answer)
             print(answers)
         for j in range(len(answers)):
@@ -63,7 +70,7 @@ def get_full_answer(query, update, bot):
     index=int(answers[int(query.data)][2])
     q=answers[int(query.data)][0]
     print(type(index))
-    an=df['answer'][index]
+    an=corpus_embeddings['a'][index]
     print(an)
     query.edit_message_text(text=f"Selected option: {q} \n Answer: {an}")
     answers.clear()
