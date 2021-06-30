@@ -53,55 +53,56 @@ def sample_responses(input_text, update, context):
         
     
     if user_message in ("hello", "hi", "hallo"):
-        print("func hallo")
+        #print("func hallo")
         #topics=dbu.get_topics()
         #print(topics)        
         bot.send_chat_action(chat_id=update.message.chat_id, action="typing")
-        time.sleep(2)
+        time.sleep(1)
         bot.send_chat_action(chat_id=update.message.chat_id, action="cancel")
-                
-        bot.send_message(chat_id=update.message.chat_id, text="Hey! How is it going?", reply_markup=ForceReply())
+        text="Hey! Schön das du hier bist"+u'😃' + "\n Fangen wir an zu lernen!"
+        bot.send_message(chat_id=update.message.chat_id, text=text)
         
         return None
 
-    if user_message in ("who are you", "who are you", "wer bist du" "wer bist du"):
+    if user_message in ("wer bist du"):
         bot.send_chat_action(chat_id=update.message.chat_id, action="typing")
-        time.sleep(2)
+        time.sleep(1)
         bot.send_chat_action(chat_id=update.message.chat_id, action="cancel")
-        bot.send_message(chat_id=update.message.chat_id, text="Ich bin ein Test Bot")
+        text="Ich bin der Fancy Flashcard Bot" +u'⚡'+ "\n Ich helfe dir beim lernen." + u'🎓'+u'📚' + " \n Für weitere Infos Tippe /help ein."
+        bot.send_message(chat_id=update.message.chat_id, text=text)
         return None
         
 
-    if user_message in ("time", "time", "zeit", "zeit", "datum", "datum"):
+    if user_message in ("zeit", "datum"):
         bot.send_chat_action(chat_id=update.message.chat_id, action="typing")
-        time.sleep(2)
-        bot.send_chat_action(chat_id=update.message.chat_id, action="cancel")
+        time.sleep(1)        
         now = datetime.now()
         date_time=now.strftime("%d/%m/%y, %H:%M:%S")
         date_time=str(date_time)
+        bot.send_chat_action(chat_id=update.message.chat_id, action="cancel")
         bot.send_message(chat_id=update.message.chat_id, text=date_time)
         return None
 
 
-    if user_message == "business intelligence":
-       return "Du hast Business Intelligence gewählt"
+    # if user_message == "business intelligence":
+    #    return "Du hast Business Intelligence gewählt"
 
-    if user_message in "unternehmensführung":
-        return"Du hast Unternehmensführung gewählt"
+    # if user_message in "unternehmensführung":
+    #     return"Du hast Unternehmensführung gewählt"
 
-    if user_message == "wirtschaftsinformatik":
-        return "Du hast Wirtschaftsinformatik gewählt"
+    # if user_message == "wirtschaftsinformatik":
+    #     return "Du hast Wirtschaftsinformatik gewählt"
 
-    if user_message == "bwl":
-        return"Du hast BWL gewählt"
+    # if user_message == "bwl":
+    #     return"Du hast BWL gewählt"
 
-    if user_message == "25:5 intervall":
-        x=threading.Thread(target=timer,args=(bot,update))
-        bot.send_message(chat_id=update.message.chat_id, text="Timer Started")
-        x.start()
+    # if user_message == "25:5 intervall":
+    #     x=threading.Thread(target=timer,args=(bot,update))
+    #     bot.send_message(chat_id=update.message.chat_id, text="Timer Started")
+    #     x.start()
         
-        return None
-    bot.send_message(chat_id=update.message.chat_id, text="I don't understand you.")
+    #     return None
+    bot.send_message(chat_id=update.message.chat_id, text="Ich verstehe dich leider nicht. Für Hilfe gebe /help ein.")
     return None
 
 def timer(update, context, data):
@@ -110,7 +111,7 @@ def timer(update, context, data):
     wiederholugnen=int(data['wiederholungen'])
     for i in range(wiederholugnen):
         if i==0:
-            context.bot.send_photo(chat_id=update.message.chat_id, photo=open('./Fancy_Flashcards_Bot_project/chatbot/work_time.png', 'rb'), caption="Start Working")
+            context.bot.send_photo(chat_id=update.message.chat_id, photo=open('work_time.png', 'rb'), caption="Fangen wir an zu lernen.")
         t=worktime#*60
         while t:
             mins = t // 60
@@ -120,19 +121,19 @@ def timer(update, context, data):
             time.sleep(1)
             t-=1
         if i==(wiederholugnen-1):
-            context.bot.send_photo(chat_id=update.message.chat_id, photo=open('./Fancy_Flashcards_Bot_project/chatbot/finish.png', 'rb'), caption="Finished Work")
+            context.bot.send_photo(chat_id=update.message.chat_id, photo=open('finish.png', 'rb'), caption="Du hast es geschafft. Du bist fertig mit lernen.")
         else:
-            context.bot.send_photo(chat_id=update.message.chat_id, photo=open('./Fancy_Flashcards_Bot_project/chatbot/break_time.png', 'rb'), caption="Break Time")    
-        t=breaktime#*60
-        while t:
-            mins = t // 60
-            secs = t % 60
-            timer = '{:02d}:{:02d}'.format(mins,secs)
-            print(" " + timer, end="\r")
-            time.sleep(1)
-            t-=1
-        if i !=(wiederholugnen-1):
-            context.bot.send_photo(chat_id=update.message.chat_id, photo=open('./Fancy_Flashcards_Bot_project/chatbot/work_time.png', 'rb'), caption="Work Time")
-        
+            context.bot.send_photo(chat_id=update.message.chat_id, photo=open('break_time.png', 'rb'), caption="Zeit für eine Pause.")    
+            t=breaktime#*60
+            while t:
+                mins = t // 60
+                secs = t % 60
+                timer = '{:02d}:{:02d}'.format(mins,secs)
+                print(" " + timer, end="\r")
+                time.sleep(1)
+                t-=1
+            #if i !=(wiederholugnen-1):
+            context.bot.send_photo(chat_id=update.message.chat_id, photo=open('work_time.png', 'rb'), caption="Zeit zu lernen.")
+            
     return None
     
