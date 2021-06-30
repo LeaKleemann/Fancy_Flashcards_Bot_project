@@ -65,13 +65,13 @@ def get_question_tensor():
     query_return = pd.read_sql_query(query, con=engine)
     df = pd.DataFrame(query_return)
     tensor=df.q_tensor.transform(transform_to_tensor)
-    return tensor[0]
+    return torch.reshape(tensor[0], (1720,384))
 
-print(get_question_tensor())
-# print(read_data("Finanzbuchhaltung"))
-df=get_topics()
+# print(get_question_tensor())
+# # print(read_data("Finanzbuchhaltung"))
+# df=get_topics()
 
-df
+# df
 
 def read_emd():
     engine = create_engine('sqlite:///'+db_file.as_posix(), echo=False)
@@ -80,7 +80,7 @@ def read_emd():
     #q=create_query("*")
     query=pd.read_sql_query(fquery, con=engine)
     df = pd.DataFrame(query)
-    df['q_tensor']=df.q_tensor.transform(transform_to_tensor)
+    # df['q_tensor']=df.q_tensor.transform(transform_to_tensor)
     df['a_tensor']=df.a_tensor.transform(transform_to_tensor)
     conn.close()
     engine.dispose()

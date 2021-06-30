@@ -12,8 +12,7 @@ import database_utils as dbu
 model = SentenceTransformer('paraphrase-multilingual-MiniLM-L12-v2')
 
 embeddings=dbu.read_emd()
-
-corpus_embeddings=embeddings['q_tensor'].tolist()
+corpus_embeddings = dbu.get_question_tensor()
 #corpus_embeddings = corpus_embeddings.astype(np.float32)
 #embeddings= np.loadtxt(r'embeddings.txt')
 
@@ -24,14 +23,12 @@ corpus_embeddings=embeddings['q_tensor'].tolist()
 answers=[]
 def get_answer(frage, update, bot):
     query_embedding = model.encode(frage)
-    cosine_sim = cosine_similarity(corpus_embeddings, query_embedding)
-    max_idx=cosine_sim.argmax()
     cos_scores = util.pytorch_cos_sim(query_embedding, corpus_embeddings)[0]
     top_results = torch.topk(cos_scores, k=1)
     print(top_results[0])
     if float(top_results[0]) >= 0.60:
-        answer= corpus_embeddings["q"][int(top_results[1])]
-        an=corpus_embeddings['a'][int(top_results[1])] # gibt antwort zurück
+        answer= embeddings["q"][int(top_results[1])]
+        an=embeddings['a'][int(top_results[1])]
         answer=answer+ "\n" + an 
         bot.send_message(chat_id=update.message.chat_id, text=answer)
     else:
@@ -40,7 +37,7 @@ def get_answer(frage, update, bot):
         botanswer=""
         keyboard=[]
         for i in range(len(top_results[0])):
-            answer=corpus_embeddings["q"][int(top_results[1][i])], str(float(top_results[0][i])), str(int(top_results[1][i]))
+            answer=embeddings["q"][int(top_results[1][i])], str(float(top_results[0][i])), str(int(top_results[1][i]))
             answers.append(answer)
             print(answers)
         for j in range(len(answers)):
@@ -52,16 +49,10 @@ def get_answer(frage, update, bot):
                 if i == 1:
                     botanswer += "\n"
                 
-        
-       
-
         reply_markup = InlineKeyboardMarkup(keyboard)
 
         update.message.reply_text('Please choose:', reply_markup=reply_markup)
 
-
-    
-    
     return None
 
 def get_full_answer(query, update, bot):
