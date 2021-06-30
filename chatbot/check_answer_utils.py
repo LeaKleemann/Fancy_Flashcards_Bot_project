@@ -36,8 +36,8 @@ def compare_tensors(solution,answer):
     print(cosine_score)
     print(top_results)
     return top_results
-def get_answer_string(score):
-    if score >=0.5:
-        return 'Gut gemacht! Die Ähnlichkeit zur Musterlösung beträgt {}'.format(score)
-    else:
-        return 'Schade! Die Ähnlichkeit zur Musterlösung beträgt nur {}'.format(score)
+# def get_answer_string(score):
+#     if score >=0.5:
+#         return 'Gut gemacht! Die Ähnlichkeit zur Musterlösung beträgt {}'.format(score)
+#     else:
+#         return 'Schade! Die Ähnlichkeit zur Musterlösung beträgt nur {}'.format(score)

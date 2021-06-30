@@ -8,7 +8,7 @@ import timer as T
 #import sentence_transf as S
 import learning as L
 import time
-
+import emoji
 from dotenv import load_dotenv
 
 import threading
@@ -25,7 +25,7 @@ token=os.getenv("TELEGRAM_BOT_TOKEN")
 # initilize bot
 bot=Bot(token)
 
-print ("Bot strarted ...")
+#print ("Bot strarted ...")
 
 
 
@@ -41,8 +41,16 @@ ANSWER=3
 #NEXT=4
 
 def start_command(update,  context):
-    bot.send_message(chat_id=update.message.chat_id, text="Herzlich Willkommenn! \n Der Fancy Flashcard Bot hilft dir beim Lernen. \n Wenn du hilfe brauchst gebe /help ein. \n Du willst das Fach aus wählen gebe /lernen ein. \n Zusätzlich kannst du dir einen Timer stellen. Das geht über /timer.")
+    #teyt=(u'👩‍🎓')
+    #a="\U000200D"
+    #b="\U0001F393"
+    #a='\N{woman student}'
+    #bot.send_message(chat_id=update.message.chat_id, text=teyt)
+    #bot.send_message(chat_id=update.message.chat_id, text=a)
+    #bot.send_message(chat_id=update.message.chat_id, text=b)
+    text="Herzlich Willkommen beim Fancy Flashcard Bot!"+ u'⚡'+" Mit Hilfe von diesem Bot kannst du auf eine neue Art deine Karteikarten lernen." + u'👩‍🎓' + u'👨‍🎓' + " Zum einen kannst du dem Bot Fragen stellen und er antwortet. Zum anderen ist es möglich, dass der Bot dir Fragen stellt. Über das Keyboard kannst du diese Frage beantworten. Der Bot überprüft deine Antwort und korrigiert dich gegebenenfalls. \n  Du benötigst Hilfe?" + u'❓'+" Gebe /help ein. \n Du willst Lernen." + u'🎓'+u'📚' +  "Geben /lernen ein und wähle das Fach aus, welches du lernen möchtest. \n Zusätzlich kannst du dir einen Timer stellen." + u'⏱' +  "Den Timer startest du über /timer."
 
+    bot.send_message(chat_id=update.message.chat_id, text=text)
 def help_command(update,  context):
     bot.send_message(chat_id=update.message.chat_id, text="If you need help! You should ask for it on Google!")
 
@@ -79,10 +87,10 @@ def handle_message(update, context):
     text = str(update.message.text).lower()
     print("Text:", text)
     print(f"Update Handle Message {update}")
-    try:
-        print("Reply:", update.message.reply_to_message)
-    except:
-        print("nicht vorhanden")
+    #try:
+    #    print("Reply:", update.message.reply_to_message)
+    #except:
+    #    print("nicht vorhanden")
 
     #print(f"Update reply message {update.reply_to_message}")
     
