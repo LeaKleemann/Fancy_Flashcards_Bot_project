@@ -18,18 +18,13 @@ import pandas as pd
 import pathlib2 as pathlib
 import torch
 
-
 cwd=pathlib.Path().cwd()
+# print(cwd)
 db_file=cwd.joinpath('cards.db')
-print(db_file)
+# print(db_file)
 
-
-# +
-# engine = create_engine('sqlite:///'+db_file.as_posix(), echo=False)
-
-# +
-# engine
-# -
+engine = create_engine('sqlite:///'+db_file.as_posix(), echo=False)
+# print(engine) 
 
 def create_query(topic):
     query='''SELECT * FROM cards WHERE topic="{}"'''.format(topic)
@@ -46,7 +41,8 @@ def read_data(topic):
     q=create_query(topic)
     query=pd.read_sql_query(create_query(topic), con=engine)
     df = pd.DataFrame(query)
-    df['q_tensor']=df.q_tensor.transform(transform_to_tensor)
+    print(df['a_tensor'][0])
+    # df['q_tensor']=df.q_tensor.transform(transform_to_tensor)
     df['a_tensor']=df.a_tensor.transform(transform_to_tensor)
     conn.close()
     engine.dispose()
@@ -64,6 +60,15 @@ def get_topics():
     return topics  
 
 
+def get_question_tensor():
+    query = '''SELECT * FROM questions;'''
+    query_return = pd.read_sql_query(query, con=engine)
+    df = pd.DataFrame(query_return)
+    tensor=df.q_tensor.transform(transform_to_tensor)
+    return tensor[0]
+
+print(get_question_tensor())
+# print(read_data("Finanzbuchhaltung"))
 df=get_topics()
 
 df

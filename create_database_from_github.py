@@ -59,7 +59,7 @@ def read_json_files(files):
             df=df.assign(topic=[topic for x in range(len(df.index))],deck=[deck for x in range(len(df.index))])
     #         df['topic']=pd.Series([topic for x in range(len(df.index))], index=df.index)
     #         df['deck']=pd.Series([deck for x in range(len(df.index))], index=df.index)
-            df['q_tensor']=df.q.transform(get_tensor)
+            # df['q_tensor']=df.q.transform(get_tensor)
             df['a_tensor']=df.a.transform(get_tensor)
             frames.append(df)
             print('deck finished:',deck)
@@ -78,10 +78,16 @@ dataframe=read_json_files(files)
 # +
 engine = create_engine('sqlite:///'+db_file.as_posix(), echo=False)
 
-dataframe['q_tensor']=dataframe.q_tensor.transform(lambda x: x.tolist())
+# dataframe['q_tensor']=dataframe.q_tensor.transform(lambda x: x.tolist())
 dataframe['a_tensor']=dataframe.a_tensor.transform(lambda x: x.tolist())
-
 dataframe = dataframe.applymap(str)
 
+questions = get_tensor(dataframe['q'])
+# questions = dataframe.q.transform(lambda x: x.tolist())
+questions = str(questions.tolist())
+# questions = questions.applymap(str)
+questions_df = pd.DataFrame([questions], columns=["q_tensor"])
+
+questions_df.to_sql('questions', con=engine, if_exists='replace')
 dataframe.to_sql('cards', con=engine,if_exists='replace')
 dataframe.to_csv('data.csv',sep=';',index=False)
