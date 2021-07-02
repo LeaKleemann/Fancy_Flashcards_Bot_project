@@ -5,31 +5,21 @@ import os
 print(os.getcwd()) 
 import responses as R
 import timer as T
-#import sentence_transf as S
+import sentence_transf as S
 import learning as L
 import time
-import emoji
 from dotenv import load_dotenv
-
 import threading
 from os import environ as env
 
-# load token for telegram bot
+'''load bot token and initialize Bot'''
 load_dotenv()
-#token=env["TELEGRAM_BOT_TOKEN"]
-#token=os.environ.get("TELEGRAM_BOT_TOKEN")
 token=os.getenv("TELEGRAM_BOT_TOKEN")
-#print(token)
-#token=keys.TELEGRAM_BOT_TOKEN
-#token="1837522537:AAF0zbRUBKS3sl-0eQit2lweE5UKH7Vjh-0"
-# initilize bot
 bot=Bot(token)
 
-#print ("Bot strarted ...")
-
-
-
-# data = {'title': "", 'text': "", 'comments': ""}
+'''define states for Handlers
+First Handler: Timer Handler
+Second Handler: Learning Handler'''
 TYPE=1
 TITLE = 2
 TEXT = 3
@@ -38,39 +28,26 @@ COMMENTS = 4
 TOPIC=1
 QUESTION=2
 ANSWER=3
-#NEXT=4
 
+'''initialize start Command Handler, execution when user send message /start'''
 def start_command(update,  context):
-    #teyt=(u'👩‍🎓')
-    #a="\U000200D"
-    #b="\U0001F393"
-    #a='\N{woman student}'
-    #bot.send_message(chat_id=update.message.chat_id, text=teyt)
-    #bot.send_message(chat_id=update.message.chat_id, text=a)
-    #bot.send_message(chat_id=update.message.chat_id, text=b)
-    text="Herzlich Willkommen beim Fancy Flashcard Bot!"+ u'⚡'+" Mit Hilfe von diesem Bot kannst du auf eine neue Art deine Karteikarten lernen." + u'👩‍🎓' + u'👨‍🎓' + " Zum einen kannst du dem Bot Fragen stellen und er antwortet. Zum anderen ist es möglich, dass der Bot dir Fragen stellt. Über das Keyboard kannst du diese Frage beantworten. Der Bot überprüft deine Antwort und korrigiert dich gegebenenfalls. \n  Du benötigst Hilfe?" + u'❓'+" Gebe /help ein. \n Du willst Lernen." + u'🎓'+u'📚' +  "Geben /lernen ein und wähle das Fach aus, welches du lernen möchtest. \n Zusätzlich kannst du dir einen Timer stellen." + u'⏱' +  "Den Timer startest du über /timer."
+    
+    text="Herzlich Willkommen beim Fancy Flashcard Bot!"+ u'⚡'+" Mit Hilfe von diesem Bot kannst du auf eine neue Art deine Karteikarten lernen."\
+         + u'👩‍🎓' + u'👨‍🎓' + " Zum einen kannst du dem Bot Fragen stellen und er antwortet. Zum anderen ist es möglich, dass der Bot dir Fragen stellt.\
+              Über das Keyboard kannst du diese Frage beantworten. Der Bot überprüft deine Antwort und korrigiert dich gegebenenfalls. \nDu \
+                  benötigst Hilfe?" + u'❓'+" Gebe /help ein. \nDu willst Lernen." + u'🎓'+u'📚' \
+                       +  "Geben /lernen ein und wähle das Fach aus, welches du lernen möchtest. \nZusätzlich kannst du dir einen Timer stellen."\
+                            + u'⏱' +  "Den Timer startest du über /timer."
 
     bot.send_message(chat_id=update.message.chat_id, text=text)
+
+'''initialize help Command Handler, execution when user send message /help'''
 def help_command(update,  context):
     bot.send_message(chat_id=update.message.chat_id, text="If you need help! You should ask for it on Google!")
 
-# def lernen_command(update,  context):
 
-#     markup=ReplyKeyboardMarkup([[KeyboardButton("Business Intelligence")],[KeyboardButton("Unternehmensführung")], 
-#      [KeyboardButton("Wirtschaftsinformatik")],[KeyboardButton("BWL") ]], resize_keyboard=True, one_time_keyboard=True)
-
-#     bot.send_message(chat_id=update.message.chat_id, reply_markup=markup,  text="Wähle das Fach welches du lernen möchtest \n - Business Intelligence \n - Unternehmensführung \n - Wirtschaftsinformatik \n - BWL")
-
-# def timer_command (update, context):
-    
-#     #markup=ReplyKeyboardMarkup([[KeyboardButton("25:5 Intervall")],[KeyboardButton("50:10 Intervall")]], resize_keyboard=True, one_time_keyboard=True)
-#     #bot.send_message(chat_id=update.message.chat_id, text="Wähle das Pomodoro Intervall", reply_markup=markup)
-#     x=threading.Thread(target=T.add,args=(update, context))
-#     #update.message.reply_text(text="Timer Started")
-#     x.start()
-
-
-
+'''initialize Buttons for question to decide which question the user means
+pass the question back to sentence transf to get the question and answer'''
 def button(update: Update, context: CallbackContext) -> None:
     """Parses the CallbackQuery and updates the message text."""
     query = update.callback_query
@@ -80,44 +57,30 @@ def button(update: Update, context: CallbackContext) -> None:
     S.get_full_answer(query, update, bot)
     return None
     
-
-
+'''initialize Message handler 
+every message is passed to sample responses to get the answer'''
 def handle_message(update, context):
     
     text = str(update.message.text).lower()
     print("Text:", text)
     print(f"Update Handle Message {update}")
-    #try:
-    #    print("Reply:", update.message.reply_to_message)
-    #except:
-    #    print("nicht vorhanden")
-
-    #print(f"Update reply message {update.reply_to_message}")
-    
-    
     response=R.sample_responses(text, update, context)
 
     if response != None:
         bot.send_message(chat_id=update.message.chat_id, text=response)
         
-
+'''error handler'''
 def error(update, context):
     print(f"Update {update} caused error {context.error}")
 
 
-
-
-
-
+'''start the chatbot
+initialize Updater to get user messages'''
 def main():  
     updater=Updater(token, use_context=True)
     dp=updater.dispatcher
-    #print(dir(dp))
-    # if gl_var==True:
-    #     start_command()
-    #     gl_var=False
-
-
+    
+    '''initilaze learning conversation Handler to control conversation'''
     lernen_conversation_handler=ConversationHandler(
     entry_points=[CommandHandler('lernen', L.lernen)],
     states={
@@ -141,6 +104,7 @@ def main():
     fallbacks=[CommandHandler('cancel', L.cancel)]
     )
 
+    '''initilaze timer conversation Handler to set a timer'''
     timer_conversation_handler = ConversationHandler(
     entry_points=[CommandHandler('timer', T.timer)],
     states={
@@ -164,6 +128,8 @@ def main():
     fallbacks=[CommandHandler('cancel', T.cancel)]
     )                
 #x=threading.Thread(target=R.timer,args=(update, context, data))
+    
+    '''add the different Handler'''
     dp.add_handler(timer_conversation_handler)
     dp.add_handler(lernen_conversation_handler)
     dp.add_handler(CommandHandler("start", start_command))
@@ -175,6 +141,7 @@ def main():
     dp.add_handler(MessageHandler(Filters.text, handle_message))
     dp.add_error_handler(error)
 
+    '''start bot'''
     updater.start_polling()
     print('Running... [Press Ctrl+C to stop]')
     updater.idle()

@@ -20,5 +20,5 @@ classifier = pickle.load(f)
 
 f.close()
 
-sentence="Wer bist du"
+sentence="Data Management ist ein Teil von Business Intelligence"
 print(classifier.classify(spacy_tokenizer(sentence)))

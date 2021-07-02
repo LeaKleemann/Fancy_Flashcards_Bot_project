@@ -39,7 +39,7 @@ def get_answer(frage, update, bot):
         for i in range(len(top_results[0])):
             answer=embeddings["q"][int(top_results[1][i])], str(float(top_results[0][i])), str(int(top_results[1][i]))
             answers.append(answer)
-            print(answers)
+            print("Answers:",answers)
         for j in range(len(answers)):
             for i in range(2):
                 botanswer += answers[j][i]
@@ -56,13 +56,17 @@ def get_answer(frage, update, bot):
     return None
 
 def get_full_answer(query, update, bot):
-    print((int(query.data)))
-    print(answers)
+    print("Query Data:",int(query.data))
+    print("Answer full:", answers)
     index=int(answers[int(query.data)][2])
-    q=answers[int(query.data)][0]
-    print(type(index))
-    an=corpus_embeddings['a'][index]
-    print(an)
+    print(index)
+    q=str(answers[int(query.data)][0])
+    print("q:",q)
+    #print(type(index))
+    print("embeddings:", embeddings['a'][index])
+    an=embeddings['a'][index]
+    print(type(an))
+    print("an:",an)
     query.edit_message_text(text=f"Selected option: {q} \n Answer: {an}")
     answers.clear()
     return None 
