@@ -1,6 +1,7 @@
 from telegram import *
 from telegram.ext import *
 import learning as L
+import os
 from dotenv import load_dotenv
 '''
 load bot token and initialize bot
