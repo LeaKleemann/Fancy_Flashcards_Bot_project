@@ -10,6 +10,10 @@ Verteilung der Aufgaben:
 
 - Maria: Entwicklung des Telegram Chatbots
 
+## Datenbank
+
+### Automatisches Auslesen der Files von GitHub
+
 ## Programmiersprache und Technolgien
 - Python
 - Telegram Bot API
