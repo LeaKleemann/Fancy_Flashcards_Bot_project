@@ -10,7 +10,7 @@ load_dotenv()
 token=os.getenv("TELEGRAM_BOT_TOKEN")
 bot=Bot(token)
 '''define help comand if user aks for help while he is in learning Command Handler'''
-def help(update, context, bot):
+def help(update, context):
     text="Folgendes kannst du eingeben um mit dem Bot zu kommunizieren.\n"\
     "Wenn du Lernen möchtest gebe /lernen ein. Als erstes wirst du gefragt welches Deck " +u'📚'+ "du lernen möchtest."\
     "Über die automatisch erscheinenden Buttons kannst du das gewünschte Deck ganz einfach auswählen."\

@@ -8,7 +8,9 @@ from telegram import *
 from telegram.ext import * 
 from dotenv import load_dotenv
 import threading
-
+import pathlib2 as pathlib
+from sqlalchemy import create_engine
+import pandas as pd
 nlp = spacy.load('de_core_news_lg')
 
 '''get database file'''
@@ -50,11 +52,9 @@ def spacy_tokenizer(message):
 
 def get_distance(message, update, bot):
     message=[message]
-    bot.send_chat_action(chat_id=update.message.chat_id, action="typing")  
-    print("get distance", message)
     '''get questions from database'''
     df=read_emd()
-    #message=str(message)
+
     '''define and train tfidf'''
     vectorizer = TfidfVectorizer(tokenizer=spacy_tokenizer)
     X = vectorizer.fit(df['q'])
@@ -69,8 +69,7 @@ def get_distance(message, update, bot):
     max_idx=cosine_sim.argmax()
     best_question=all_questions[max_idx]
     cosinus_wert=cosine_sim[max_idx]
-    print("best_question", best_question)
-    print("wert", cosinus_wert)
+    
 
 
     for x in modul:
@@ -81,6 +80,5 @@ def get_distance(message, update, bot):
     
     text="Gefundene Frage \n" + best_question + "\n\n" +"Antwort \n" + answer_f
     bot.send_chat_action(chat_id=update.message.chat_id, action="cancel")
-    #bot.send_message(chat_id=update.message.chat_id, text=answer_f)
     bot.send_message(chat_id=update.message.chat_id, text=text)
     return None

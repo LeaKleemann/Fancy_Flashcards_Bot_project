@@ -65,4 +65,4 @@ questions_df = pd.DataFrame([questions], columns=["q_tensor"])
 '''save tables to database'''
 questions_df.to_sql('questions', con=engine, if_exists='replace')
 dataframe.to_sql('cards', con=engine,if_exists='replace')
-# dataframe.to_csv('data.csv',sep=';',index=False)
+

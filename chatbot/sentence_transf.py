@@ -17,20 +17,22 @@ corpus_embeddings = dbu.get_question_tensor()
 '''define function get_answer, 
 input: questions from user, 
 output: answer to question if similarity is high, three nearest questions to choose when similarity is low'''
+
 answers=[]
 def get_answer(frage, update, bot):
     '''calculate question embedding and calculate similarity to all questions from database'''
     query_embedding = model.encode(frage)
     cos_scores = util.pytorch_cos_sim(query_embedding, corpus_embeddings)[0]
     top_results = torch.topk(cos_scores, k=1)
-    print(top_results[0])
+    #print(top_results[0])
     '''if similarity is high: get answer to question and send this answer to user'''
-    if float(top_results[0]) >= 0.60:
+    if float(top_results[0]) >= 0.80:
         answer= embeddings["q"][int(top_results[1])]
         an=embeddings['a'][int(top_results[1])]
         answer=answer+ "\n" + an 
         bot.send_message(chat_id=update.message.chat_id, text=answer)
-    '''low similarity: send three nearest questions and let user choose which answer should be sent'''
+
+        '''low similarity: send three nearest questions and let user choose which answer should be sent'''
     else:
         top_results = torch.topk(cos_scores, k=3)
         global answers
@@ -40,7 +42,7 @@ def get_answer(frage, update, bot):
         for i in range(len(top_results[0])):
             answer=embeddings["q"][int(top_results[1][i])], str(float(top_results[0][i])), str(int(top_results[1][i]))
             answers.append(answer)
-            print("Answers:",answers)
+            
         '''create keyboard with found questions'''
         for j in range(len(answers)):
             for i in range(2):
@@ -57,21 +59,15 @@ def get_answer(frage, update, bot):
 
     return None
 
-'''define function,
-input: query data,
-output: send question and answer to user'''
+'''
+define function
+input: query data
+output: send question and answer to user
+'''
 def get_full_answer(query, update, bot):
-    print("Query Data:",int(query.data))
-    print("Answer full:", answers)
     index=int(answers[int(query.data)][2])
-    print(index)
     q=str(answers[int(query.data)][0])
-    print("q:",q)
-    #print(type(index))
-    print("embeddings:", embeddings['a'][index])
     an=embeddings['a'][index]
-    print(type(an))
-    print("an:",an)
     query.edit_message_text(text=f"Selected option: {q} \n Answer: {an}")
     answers.clear()
     return None 

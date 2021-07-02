@@ -1,8 +1,7 @@
 # -*- coding: utf-8 -*-
 from telegram import *
 from telegram.ext import *
-import os
-print(os.getcwd()) 
+import os 
 import responses as R
 import timer as T
 import sentence_transf as S
@@ -11,7 +10,6 @@ import time
 from dotenv import load_dotenv
 import threading
 from os import environ as env
-#import help as H
 
 '''load bot token and initialize Bot'''
 load_dotenv()
@@ -24,9 +22,9 @@ First Handler: Timer Handler
 Second Handler: Learning Handler
 '''
 TYPE=1
-TITLE = 2
-TEXT = 3
-COMMENTS = 4
+WORK = 2
+BREAK = 3
+REPETITION = 4
 
 TOPIC=1
 QUESTION=2
@@ -46,6 +44,7 @@ def start_command(update,  context):
 
 '''initialize help Command Handler, execution when user send message /help'''
 def help_command(update,  context):
+
     text="Folgendes kannst du eingeben um mit dem Bot zu kommunizieren.\n"\
 "Wenn du Lernen möchtest gebe /lernen ein. Als erstes wirst du gefragt welches Deck " +u'📚'+ "du lernen möchtest."\
 "Über die automatisch erscheinenden Buttons kannst du das gewünschte Deck ganz einfach auswählen."\
@@ -64,7 +63,7 @@ def help_command(update,  context):
 "Darauf folgt eine Pause von 5 min bzw. 10 min. Dieser Zyklus wird 2 mal wiederholt."\
 "Beim benutzerdefinierten Timer wirst du nach den jeweiligen Zeitintervallen und Wiederholungen gefragt. Antworte hier einfach mit deiner gewünschten Zahl."
     bot.send_message(chat_id=update.message.chat_id, text=text, parse_mode=ParseMode.HTML)
-    #H.help(update, context,bot)
+    
 
 
 '''initialize Buttons for question to decide which question the user means
@@ -72,9 +71,7 @@ pass the question back to sentence transf to get the question and answer'''
 def button(update: Update, context: CallbackContext) -> None:
     """Parses the CallbackQuery and updates the message text."""
     query = update.callback_query
-    
     query.answer()
-    
     S.get_full_answer(query, update, bot)
     return None
     
@@ -83,8 +80,6 @@ every message is passed to sample responses to get the answer'''
 def handle_message(update, context):
     
     text = str(update.message.text).lower()
-    print("Text:", text)
-    print(f"Update Handle Message {update}")
     response=R.sample_responses(text, update, context)
 
     if response != None:
@@ -130,17 +125,17 @@ def main():
             CommandHandler('cancel', T.cancel),  # has to be before MessageHandler to catch `/cancel` as command, not as `title`
             MessageHandler(Filters.text, T.get_type)
         ],
-        TITLE: [
+        WORK: [
             CommandHandler('cancel', T.cancel),  # has to be before MessageHandler to catch `/cancel` as command, not as `title`
-            MessageHandler(Filters.text, T.get_title)
+            MessageHandler(Filters.text, T.get_work)
         ],
-        TEXT: [
+        BREAK: [
             CommandHandler('cancel', T.cancel),  # has to be before MessageHandler to catch `/cancel` as command, not as `text`
-            MessageHandler(Filters.text, T.get_text)
+            MessageHandler(Filters.text, T.get_break)
         ],
-        COMMENTS: [
+        REPETITION: [
             CommandHandler('cancel', T.cancel),  # has to be before MessageHandler to catch `/cancel` as command, not as `comments`
-            MessageHandler(Filters.text, T.get_comments)
+            MessageHandler(Filters.text, T.get_repetition)
         ],
     },
     fallbacks=[CommandHandler('cancel', T.cancel)]

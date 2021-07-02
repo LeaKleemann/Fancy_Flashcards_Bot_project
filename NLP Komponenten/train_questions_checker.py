@@ -35,7 +35,7 @@ def spacy_tokenizer(question):
         if token.pos_ in ["NOUN", "PROPN"]:
             text=token.text
             return_dict['contains({})'.format(text.lower())] = True
-        '''add other words lemmatised and lowercase'''
+            '''add other words lemmatised and lowercase'''
         else:
             return_dict['contains({})'.format(token.lemma_.lower())] = True
     return return_dict

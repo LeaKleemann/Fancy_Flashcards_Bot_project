@@ -8,11 +8,8 @@ import os
 import threading
 import database_utils as dbu
 import check_answer_utils as cau
-
 import pandas as pd
 import help as H
-
-
 
 '''
 fach= chosen topic
@@ -142,6 +139,4 @@ def next_question(update, context):
 def cancel(update, context):
     markup=ReplyKeyboardRemove()
     update.message.reply_text('Lernen beendet',reply_markup=markup)
-
-    # end of conversation
     return ConversationHandler.END
