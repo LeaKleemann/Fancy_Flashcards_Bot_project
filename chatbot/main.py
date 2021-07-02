@@ -11,15 +11,18 @@ import time
 from dotenv import load_dotenv
 import threading
 from os import environ as env
+#import help as H
 
 '''load bot token and initialize Bot'''
 load_dotenv()
 token=os.getenv("TELEGRAM_BOT_TOKEN")
 bot=Bot(token)
 
-'''define states for Handlers
+'''
+define states for Handlers
 First Handler: Timer Handler
-Second Handler: Learning Handler'''
+Second Handler: Learning Handler
+'''
 TYPE=1
 TITLE = 2
 TEXT = 3
@@ -43,7 +46,25 @@ def start_command(update,  context):
 
 '''initialize help Command Handler, execution when user send message /help'''
 def help_command(update,  context):
-    bot.send_message(chat_id=update.message.chat_id, text="If you need help! You should ask for it on Google!")
+    text="Folgendes kannst du eingeben um mit dem Bot zu kommunizieren.\n"\
+"Wenn du Lernen möchtest gebe /lernen ein. Als erstes wirst du gefragt welches Deck " +u'📚'+ "du lernen möchtest."\
+"Über die automatisch erscheinenden Buttons kannst du das gewünschte Deck ganz einfach auswählen."\
+"Im Anschluss stellt dir der Bot eine zufällige Frage aus deinem gewähltem Deck. Diese Frage kannst du nun beantworten.\n\n"\
+"<b>WICHTIG:</b> Wenn du über Telegram Web lernst, wähle zunächst die Nachricht mit der Frage aus und drücke reply."\
+"Solltest du über die App lernen wird automatisch auf die Nachricht mir der Frage geantwortet."\
+"Das ist wichtig, damit der Bot überprüfen kann, ob deine Antwort richtig ist.\n\n"\
+"Im nächsten Schritt kriegst du vom Bot eine Rückmeldung ob deine Antwort richitg ist und wie die Musterlösung ist."\
+"Außerdem wirst du gefragt, ob du weiter lernen möchtest, aufhören möchtest oder das Deck wechseln möchtest. Hier kannst du wieder über die Buttons antworten."\
+"Solltest du Inhalte der Frage vom Bot nicht verstehen, lösche das Antworten auf die letzte Nachricht und tippe deine Frage ein."\
+"Der Bot antwortet dir nun auf deine Frage.\n\n"\
+"Wenn du eine Frage zu Inhalten der Decks hast, kannst du einfach deine Frage eintippen.\n\n"\
+"Außerdem kannst du dir einen Timer" + u'⏱' + "stellen während du lernst. Der Timer basiert auf der Promodoro Technick."\
+"Über /timer kannst du den Timer starten. Du kannst aus vordefinierten Timern wählen oder deinen eigenen Timer einstellen."\
+"Die Auswahlmöglichkeiten erscheinen über Buttons. Bei den vordefinierten  Timern wurde eine Arbeitszeit von 25 min bzw. 50 min festgelegt."\
+"Darauf folgt eine Pause von 5 min bzw. 10 min. Dieser Zyklus wird 2 mal wiederholt."\
+"Beim benutzerdefinierten Timer wirst du nach den jeweiligen Zeitintervallen und Wiederholungen gefragt. Antworte hier einfach mit deiner gewünschten Zahl."
+    bot.send_message(chat_id=update.message.chat_id, text=text, parse_mode=ParseMode.HTML)
+    #H.help(update, context,bot)
 
 
 '''initialize Buttons for question to decide which question the user means
@@ -85,21 +106,18 @@ def main():
     entry_points=[CommandHandler('lernen', L.lernen)],
     states={
         TOPIC: [
-            CommandHandler('cancel', T.cancel),  # has to be before MessageHandler to catch `/cancel` as command, not as `title`
+            CommandHandler('cancel', L.cancel),  # has to be before MessageHandler to catch `/cancel` as command, not as `title`
             MessageHandler(Filters.text, L.get_type)
         ],
         QUESTION: [
-            CommandHandler('cancel', T.cancel),  # has to be before MessageHandler to catch `/cancel` as command, not as `title`
+            CommandHandler('cancel', L.cancel),  # has to be before MessageHandler to catch `/cancel` as command, not as `title`
             MessageHandler(Filters.text, L.get_answer)
         ],
         ANSWER: [
-            CommandHandler('cancel', T.cancel),  # has to be before MessageHandler to catch `/cancel` as command, not as `title`
+            CommandHandler('cancel', L.cancel),  # has to be before MessageHandler to catch `/cancel` as command, not as `title`
             MessageHandler(Filters.text, L.next_question)
         ],
-        # NEXT: [
-        #     CommandHandler('cancel', T.cancel),  # has to be before MessageHandler to catch `/cancel` as command, not as `title`
-        #     MessageHandler(Filters.text, L.next_question)
-        # ],
+        
     },
     fallbacks=[CommandHandler('cancel', L.cancel)]
     )
@@ -127,17 +145,14 @@ def main():
     },
     fallbacks=[CommandHandler('cancel', T.cancel)]
     )                
-#x=threading.Thread(target=R.timer,args=(update, context, data))
+
     
     '''add the different Handler'''
     dp.add_handler(timer_conversation_handler)
     dp.add_handler(lernen_conversation_handler)
     dp.add_handler(CommandHandler("start", start_command))
     dp.add_handler(CommandHandler("help", help_command))
-    #dp.add_handler(CommandHandler("lernen", lernen_command)) 
-
     dp.add_handler(CallbackQueryHandler(button))
-
     dp.add_handler(MessageHandler(Filters.text, handle_message))
     dp.add_error_handler(error)
 

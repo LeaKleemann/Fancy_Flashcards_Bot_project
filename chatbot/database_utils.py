@@ -1,30 +1,15 @@
-# ---
-# jupyter:
-#   jupytext:
-#     formats: ipynb,py:light
-#     text_representation:
-#       extension: .py
-#       format_name: light
-#       format_version: '1.5'
-#       jupytext_version: 1.9.1
-#   kernelspec:
-#     display_name: Python 3
-#     language: python
-#     name: python3
-# ---
-
 from sqlalchemy import create_engine
 import pandas as pd
 import pathlib2 as pathlib
 import torch
 
 cwd=pathlib.Path().cwd()
-# print(cwd)
+
 db_file=cwd.joinpath('cards.db')
-# print(db_file)
+
 
 engine = create_engine('sqlite:///'+db_file.as_posix(), echo=False)
-# print(engine) 
+
 
 def create_query(topic):
     query='''SELECT * FROM cards WHERE topic="{}"'''.format(topic)
@@ -67,11 +52,7 @@ def get_question_tensor():
     tensor=df.q_tensor.transform(transform_to_tensor)
     return torch.reshape(tensor[0], (1720,384))
 
-# print(get_question_tensor())
-# # print(read_data("Finanzbuchhaltung"))
-# df=get_topics()
 
-# df
 
 def read_emd():
     engine = create_engine('sqlite:///'+db_file.as_posix(), echo=False)

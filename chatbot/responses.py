@@ -12,6 +12,8 @@ from sqlalchemy import create_engine
 import pandas as pd
 import pathlib2 as pathlib
 import torch
+import help as H
+#import main as M
 
 
 
@@ -25,6 +27,37 @@ import torch
 
 #x=threading.Thread(target=funktion die aufgerufen werden soll)
 #danachw weiter mit x.
+def timer(update, context, data):
+    worktime=int(data['worktime'])
+    breaktime=int(data['breaktime'])
+    wiederholugnen=int(data['wiederholungen'])
+    for i in range(wiederholugnen):
+        if i==0:
+            context.bot.send_photo(chat_id=update.message.chat_id, photo=open('images/work_time.png', 'rb'), caption="Fangen wir an zu lernen.")
+        t=worktime#*60
+        while t:
+            mins = t // 60
+            secs = t % 60
+            timer = '{:02d}:{:02d}'.format(mins,secs)
+            print(" " + timer, end="\r")
+            time.sleep(1)
+            t-=1
+        if i==(wiederholugnen-1):
+            context.bot.send_photo(chat_id=update.message.chat_id, photo=open('images/finish.png', 'rb'), caption="Du hast es geschafft. Du bist fertig mit lernen.")
+        else:
+            context.bot.send_photo(chat_id=update.message.chat_id, photo=open('images/break_time.png', 'rb'), caption="Zeit für eine Pause.")    
+            t=breaktime#*60
+            while t:
+                mins = t // 60
+                secs = t % 60
+                timer = '{:02d}:{:02d}'.format(mins,secs)
+                print(" " + timer, end="\r")
+                time.sleep(1)
+                t-=1
+            #if i !=(wiederholugnen-1):
+            context.bot.send_photo(chat_id=update.message.chat_id, photo=open('images/work_time.png', 'rb'), caption="Zeit zu lernen.")
+            
+    return None
 
 def sample_responses(input_text, update, context):
     # cwd=pathlib.Path().cwd()
@@ -83,57 +116,44 @@ def sample_responses(input_text, update, context):
         bot.send_message(chat_id=update.message.chat_id, text=date_time)
         return None
 
+    if user_message =="/help":
+        H.help(update, context, bot )
+        return None
+    #     return ConversationHandler.END
 
-    # if user_message == "business intelligence":
-    #    return "Du hast Business Intelligence gewählt"
-
-    # if user_message in "unternehmensführung":
-    #     return"Du hast Unternehmensführung gewählt"
-
-    # if user_message == "wirtschaftsinformatik":
-    #     return "Du hast Wirtschaftsinformatik gewählt"
-
-    # if user_message == "bwl":
-    #     return"Du hast BWL gewählt"
-
-    # if user_message == "25:5 intervall":
-    #     x=threading.Thread(target=timer,args=(bot,update))
-    #     bot.send_message(chat_id=update.message.chat_id, text="Timer Started")
-    #     x.start()
-        
-    #     return None
+    
     bot.send_message(chat_id=update.message.chat_id, text="Ich verstehe dich leider nicht. Für Hilfe gebe /help ein.")
     return None
 
-def timer(update, context, data):
-    worktime=int(data['worktime'])
-    breaktime=int(data['breaktime'])
-    wiederholugnen=int(data['wiederholungen'])
-    for i in range(wiederholugnen):
-        if i==0:
-            context.bot.send_photo(chat_id=update.message.chat_id, photo=open('work_time.png', 'rb'), caption="Fangen wir an zu lernen.")
-        t=worktime#*60
-        while t:
-            mins = t // 60
-            secs = t % 60
-            timer = '{:02d}:{:02d}'.format(mins,secs)
-            print(" " + timer, end="\r")
-            time.sleep(1)
-            t-=1
-        if i==(wiederholugnen-1):
-            context.bot.send_photo(chat_id=update.message.chat_id, photo=open('finish.png', 'rb'), caption="Du hast es geschafft. Du bist fertig mit lernen.")
-        else:
-            context.bot.send_photo(chat_id=update.message.chat_id, photo=open('break_time.png', 'rb'), caption="Zeit für eine Pause.")    
-            t=breaktime#*60
-            while t:
-                mins = t // 60
-                secs = t % 60
-                timer = '{:02d}:{:02d}'.format(mins,secs)
-                print(" " + timer, end="\r")
-                time.sleep(1)
-                t-=1
-            #if i !=(wiederholugnen-1):
-            context.bot.send_photo(chat_id=update.message.chat_id, photo=open('work_time.png', 'rb'), caption="Zeit zu lernen.")
+# def timer(update, context, data):
+#     worktime=int(data['worktime'])
+#     breaktime=int(data['breaktime'])
+#     wiederholugnen=int(data['wiederholungen'])
+#     for i in range(wiederholugnen):
+#         if i==0:
+#             context.bot.send_photo(chat_id=update.message.chat_id, photo=open('images/work_time.png', 'rb'), caption="Fangen wir an zu lernen.")
+#         t=worktime#*60
+#         while t:
+#             mins = t // 60
+#             secs = t % 60
+#             timer = '{:02d}:{:02d}'.format(mins,secs)
+#             print(" " + timer, end="\r")
+#             time.sleep(1)
+#             t-=1
+#         if i==(wiederholugnen-1):
+#             context.bot.send_photo(chat_id=update.message.chat_id, photo=open('images/finish.png', 'rb'), caption="Du hast es geschafft. Du bist fertig mit lernen.")
+#         else:
+#             context.bot.send_photo(chat_id=update.message.chat_id, photo=open('images/break_time.png', 'rb'), caption="Zeit für eine Pause.")    
+#             t=breaktime#*60
+#             while t:
+#                 mins = t // 60
+#                 secs = t % 60
+#                 timer = '{:02d}:{:02d}'.format(mins,secs)
+#                 print(" " + timer, end="\r")
+#                 time.sleep(1)
+#                 t-=1
+#             #if i !=(wiederholugnen-1):
+#             context.bot.send_photo(chat_id=update.message.chat_id, photo=open('images/work_time.png', 'rb'), caption="Zeit zu lernen.")
             
-    return None
+#     return None
     

@@ -1,19 +1,3 @@
-# -*- coding: utf-8 -*-
-# ---
-# jupyter:
-#   jupytext:
-#     formats: ipynb,py:light
-#     text_representation:
-#       extension: .py
-#       format_name: light
-#       format_version: '1.5'
-#       jupytext_version: 1.9.1
-#   kernelspec:
-#     display_name: Python 3
-#     language: python
-#     name: python3
-# ---
-
 import pandas as pd
 import numpy as np
 import torch
@@ -36,8 +20,4 @@ def compare_tensors(solution,answer):
     print(cosine_score)
     print(top_results)
     return top_results
-# def get_answer_string(score):
-#     if score >=0.5:
-#         return 'Gut gemacht! Die Ähnlichkeit zur Musterlösung beträgt {}'.format(score)
-#     else:
-#         return 'Schade! Die Ähnlichkeit zur Musterlösung beträgt nur {}'.format(score)
+

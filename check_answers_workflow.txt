@@ -1,7 +1,0 @@
-1. user verlangt frage von bot --> thema wählen/muss gewählt sein --> reinladen des datenbank auszuges (database_utilities.read_data)
-2. bot startet randomizer, speichert index und dataframezeile (check_answer_utils.pick_random_question)
-3. bot gibt frage aus
-4. user beantwortet frage
-5. bot gleicht frage mit mustertensor ab --> berechnet score (check_answer_utils.compare_tensors)
-6. bot gibt feedback an user (check_answer_utils.get_answer_string)
-7. bot stellt nächste frage
