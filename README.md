@@ -34,6 +34,7 @@ Außerdem kann ein Timer gestellt werden während gelernt wird. Der Timer basier
 ## Verwendete Modelle
 - Sentence Transformer
 - Tf-idf
+- Naive Bayes
 
 ## Requirements 
 - Telegram Bot API
