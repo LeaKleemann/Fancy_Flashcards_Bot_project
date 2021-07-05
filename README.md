@@ -51,7 +51,7 @@ Außerdem kann ein Timer gestellt werden während gelernt wird. Der Timer basier
 - sklearn
 - sqlalchemy
 - random
-- 
+- nltk
 ## Bot starten
 
 ## Gruppenmitglieder
