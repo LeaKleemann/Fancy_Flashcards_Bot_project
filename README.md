@@ -19,6 +19,9 @@ Wenn eine Frage zu Inhalten der Decks besteht, kann die Frage eingetippt werden.
 
 Außerdem kann ein Timer gestellt werden während gelernt wird. Der Timer basiert auf der Promodoro Technick. Über /timer kann der Timer gestartet werden. Es kann aus vordefinierten Timern gewählt werden oder einen eigenen Timer einstellen. Die Auswahlmöglichkeiten erscheinen über Buttons. Bei den vordefinierten Timern wurde eine Arbeitszeit von 25 min bzw. 50 min festgelegt. Darauf folgt eine Pause von 5 min bzw. 10 min. Dieser Zyklus wird 2 mal wiederholt. Beim Benutzerdefinierten Timer wird nach den jeweiligen Zeitintervallen und Wiederholungen gefragt. Hier wird mit der gewünschten Zahl geantwortet.
 
+![alt text](https://github.com/LeaKleemann/Fancy_Flashcards_Bot_project/blob/main/Screenshot_start.png)
+
+
 ## Programmierung des Bots
 Der Telegram Bot wurde mit Hilfe des Package Python Telegram Bot in Python progrmmiert. Die Kommunikation des Bots mit dem User basiert auf sogennanten Handlern. Dabei können unterschiedliche Handler unterschieden werden. In diesem Programm wurde der Conversation Handler, Command Handler, Callback Query Handler sowie der Message Handler verwendet. Mit Hilfe des Conversation Handler kann eine vordefinierte Konversation definiert werden. Der Command Handler ruft festgelegte Funktionen auf. Dafür muss der User seine Nachricht mit einem / vor dem Text beginnen z.B. "/start". Durch den Callback Query Handler kann Feedback vom User direkt verarbeitet werden und basierend auf der Eingabe des Users wird die Konversation fortgeführt. Jeglicher Text der vom User eingegeben wird, wird vom Message Handler abgefangen und weiterverarbeitet.
 
