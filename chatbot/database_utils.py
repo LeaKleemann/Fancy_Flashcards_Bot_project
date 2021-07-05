@@ -26,6 +26,7 @@ def create_query(topic):
     '''
     query='''SELECT * FROM cards WHERE topic="{}"'''.format(topic)
     return query
+
 def transform_to_tensor(l):
     '''
     Helper function that translates the lists saved in the database back to a pytorch Floattensor.
@@ -39,6 +40,7 @@ def transform_to_tensor(l):
     l=l.split(',')
     l=[float(x) for x in l] # create python list
     return torch.FloatTensor(l)
+
 def read_data(topic):
     '''
     Reads cards of a specified topic from database and returns pandas dataframe.
@@ -58,6 +60,7 @@ def read_data(topic):
     conn.close()
     engine.dispose()
     return df
+
 def get_topics():
     '''
     returns a list of all topics from the database.
@@ -77,7 +80,6 @@ def get_topics():
     engine.dispose()
     return topics  
 
-
 def get_question_tensor():
     '''
     Returns all question tensors.
@@ -91,8 +93,6 @@ def get_question_tensor():
     df = pd.DataFrame(query_return)
     tensor=df.q_tensor.transform(transform_to_tensor)
     return torch.reshape(tensor[0], (1720,384))
-
-
 
 def read_emd():
     '''

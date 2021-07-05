@@ -9,7 +9,6 @@ import learning as L
 import time
 from dotenv import load_dotenv
 import threading
-from os import environ as env
 import help as H
 
 '''load bot token and initialize Bot'''
@@ -31,7 +30,8 @@ TOPIC=1
 QUESTION=2
 ANSWER=3
 
-'''initialize start Command Handler, execution when user send message /start'''
+'''initialize start Command Handler, execution when user send message /start
+Input: update, context'''
 def start_command(update,  context):
     
     text="Herzlich Willkommen beim Fancy Flashcard Bot!"+ u'⚡'+" Mit Hilfe von diesem Bot kannst du auf eine neue Art deine Karteikarten lernen."\
@@ -43,36 +43,17 @@ def start_command(update,  context):
 
     bot.send_message(chat_id=update.message.chat_id, text=text)
 
-'''initialize help Command Handler, execution when user send message /help'''
+'''initialize help Command Handler, execution when user send message /help
+Input: update, context'''
 def help_command(update,  context):
-
-#     text="Folgendes kannst du eingeben um mit dem Bot zu kommunizieren.\n"\
-# "Wenn du Lernen möchtest gebe /lernen ein. Als erstes wirst du gefragt welches Deck " +u'📚'+ "du lernen möchtest."\
-# "Über die automatisch erscheinenden Buttons kannst du das gewünschte Deck ganz einfach auswählen."\
-# "Im Anschluss stellt dir der Bot eine zufällige Frage aus deinem gewähltem Deck. Diese Frage kannst du nun beantworten.\n\n"\
-# "<b>WICHTIG:</b> Wenn du über Telegram Web lernst, wähle zunächst die Nachricht mit der Frage aus und drücke reply."\
-# "Solltest du über die App lernen wird automatisch auf die Nachricht mit der Frage geantwortet."\
-# "Das ist wichtig, damit der Bot überprüfen kann, ob deine Antwort richtig ist.\n\n"\
-# "Im nächsten Schritt kriegst du vom Bot eine Rückmeldung ob deine Antwort richitg ist und wie die Musterlösung ist."\
-# "Außerdem wirst du gefragt, ob du weiter lernen möchtest, aufhören möchtest oder das Deck wechseln möchtest. Hier kannst du wieder über die Buttons antworten."\
-# "Solltest du Inhalte der Frage vom Bot nicht verstehen, lösche das Antworten auf die letzte Nachricht und tippe deine Frage ein."\
-# "Der Bot antwortet dir nun auf deine Frage.\n\n"\
-# "Wenn du eine Frage zu Inhalten der Decks hast, kannst du einfach deine Frage eintippen."\
-# "Sollte sich der Bot nicht sicher sein welche Frage gemeint ist, erscheinen Auswahlbuttons."\
-# "Nach Auswahl der gewünschten Frage antwortet der Bot auf die gewählte Frage.\n\n"\
-# "Außerdem kannst du dir einen Timer" + u'⏱' + "stellen während du lernst. Der Timer basiert auf der Promodoro Technick."\
-# "Über /timer kannst du den Timer starten. Du kannst aus vordefinierten Timern wählen oder deinen eigenen Timer einstellen."\
-# "Die Auswahlmöglichkeiten erscheinen über Buttons. Bei den vordefinierten  Timern wurde eine Arbeitszeit von 25 min bzw. 50 min festgelegt."\
-# "Darauf folgt eine Pause von 5 min bzw. 10 min. Dieser Zyklus wird 2 mal wiederholt."\
-# "Beim benutzerdefinierten Timer wirst du nach den jeweiligen Zeitintervallen und Wiederholungen gefragt. Antworte hier einfach mit deiner gewünschten Zahl."
-#     bot.send_message(chat_id=update.message.chat_id, text=text, parse_mode=ParseMode.HTML)
     path=False
     H.help(update,context,path)
     
 
-
 '''initialize Buttons for question to decide which question the user means
-pass the question back to sentence transf to get the question and answer'''
+pass the question back to sentence transf to get the question and answer
+Input: update, context
+Return: None'''
 def button(update: Update, context: CallbackContext) -> None:
     """Parses the CallbackQuery and updates the message text."""
     query = update.callback_query
@@ -81,7 +62,8 @@ def button(update: Update, context: CallbackContext) -> None:
     return None
     
 '''initialize Message handler 
-every message is passed to sample responses to get the answer'''
+every message is passed to sample responses to get the answer
+Input: update, context'''
 def handle_message(update, context):
     
     text = str(update.message.text).lower()
@@ -90,7 +72,8 @@ def handle_message(update, context):
     if response != None:
         bot.send_message(chat_id=update.message.chat_id, text=response)
         
-'''error handler'''
+'''error handler
+Input: update, context'''
 def error(update, context):
     print(f"Update {update} caused error {context.error}")
 
@@ -106,15 +89,15 @@ def main():
     entry_points=[CommandHandler('lernen', L.lernen)],
     states={
         TOPIC: [
-            CommandHandler('cancel', L.cancel),  # has to be before MessageHandler to catch `/cancel` as command, not as `title`
+            CommandHandler('cancel', L.cancel),  
             MessageHandler(Filters.text, L.get_type)
         ],
         QUESTION: [
-            CommandHandler('cancel', L.cancel),  # has to be before MessageHandler to catch `/cancel` as command, not as `title`
+            CommandHandler('cancel', L.cancel),  
             MessageHandler(Filters.text, L.get_answer)
         ],
         ANSWER: [
-            CommandHandler('cancel', L.cancel),  # has to be before MessageHandler to catch `/cancel` as command, not as `title`
+            CommandHandler('cancel', L.cancel),  
             MessageHandler(Filters.text, L.next_question)
         ],
         
@@ -127,19 +110,19 @@ def main():
     entry_points=[CommandHandler('timer', T.timer)],
     states={
         TYPE: [
-            CommandHandler('cancel', T.cancel),  # has to be before MessageHandler to catch `/cancel` as command, not as `title`
+            CommandHandler('cancel', T.cancel),  
             MessageHandler(Filters.text, T.get_type)
         ],
         WORK: [
-            CommandHandler('cancel', T.cancel),  # has to be before MessageHandler to catch `/cancel` as command, not as `title`
+            CommandHandler('cancel', T.cancel),  
             MessageHandler(Filters.text, T.get_work)
         ],
         BREAK: [
-            CommandHandler('cancel', T.cancel),  # has to be before MessageHandler to catch `/cancel` as command, not as `text`
+            CommandHandler('cancel', T.cancel),  
             MessageHandler(Filters.text, T.get_break)
         ],
         REPETITION: [
-            CommandHandler('cancel', T.cancel),  # has to be before MessageHandler to catch `/cancel` as command, not as `comments`
+            CommandHandler('cancel', T.cancel),  
             MessageHandler(Filters.text, T.get_repetition)
         ],
     },

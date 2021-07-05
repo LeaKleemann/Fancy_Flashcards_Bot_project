@@ -20,6 +20,7 @@ def pick_random_question(df):
     length=len(df)-1
     index=random.randint(0,length)
     return index, df.iloc[index]
+
 def get_tensor(sentence):
     '''
     Transform answer-string to pytorch tensor
@@ -30,6 +31,7 @@ def get_tensor(sentence):
     '''
 #     transformer=SentenceTransformer('paraphrase-multilingual-MiniLM-L12-v2')
     return transformer.encode(sentence,convert_to_tensor=True)
+
 def compare_tensors(solution,answer):
     '''
     Compare the solution to the answer given and return cosine-score

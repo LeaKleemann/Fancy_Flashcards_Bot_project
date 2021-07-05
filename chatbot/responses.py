@@ -12,6 +12,11 @@ import pathlib2 as pathlib
 import torch
 import help as H
 
+'''load bot token and initialize Bot'''
+load_dotenv()
+token=os.getenv("TELEGRAM_BOT_TOKEN")
+bot=Bot(token)
+
 '''define timer, calculate worktime and breaktime'''
 def timer(update, context, data):
     
@@ -44,12 +49,11 @@ def timer(update, context, data):
             context.bot.send_photo(chat_id=update.message.chat_id, photo=open('images/work_time.png', 'rb'), caption="Zeit zu lernen.")       
     return None
 
-'''function to handle responses, check what the user messages was'''
+'''function to handle responses, check what the user messages was
+Input: user text, update, context
+Return: Depends on checking'''
 def sample_responses(input_text, update, context):
-    '''load bot token and initialize Bot'''
-    load_dotenv()
-    token=os.getenv("TELEGRAM_BOT_TOKEN")
-    bot=Bot(token)
+    
 
     user_message=input_text
 
@@ -76,9 +80,8 @@ def sample_responses(input_text, update, context):
         bot.send_message(chat_id=update.message.chat_id, text=text)
         return None
 
-    '''defined answer if user message is zeit or datum
-    send answer to user
-    return None'''
+    '''defined answer if user message is zeit or datum and send answer to user
+    Return: None'''
     if user_message in ("zeit", "datum"):
         bot.send_chat_action(chat_id=update.message.chat_id, action="typing")
         time.sleep(1)        
@@ -90,7 +93,7 @@ def sample_responses(input_text, update, context):
         return None
 
     '''if the user message is a question answer this with the help of sentence transf
-    return None'''
+    Return: None'''
     for i in ["was", "wo", "wer", "wie", "wieso", "wofür", "wozu", "wohin", "warum", "wem", "woher","?"]:
         if i in user_message:
             
@@ -100,13 +103,13 @@ def sample_responses(input_text, update, context):
         
     
     '''if user message =/help answer the message with the help of help function
-    return None'''
+    Return: None'''
     if user_message =="/help":
         H.help(update, context)
         return None
 
     '''if no match found answer with the following text
-    return None '''       
+    Return: None '''       
     bot.send_message(chat_id=update.message.chat_id, text="Ich verstehe dich leider nicht. Für Hilfe gebe /help ein.")
     return None
 

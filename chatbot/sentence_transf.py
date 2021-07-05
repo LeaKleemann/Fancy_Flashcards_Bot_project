@@ -3,9 +3,6 @@ import pandas as pd
 from telegram import *
 from telegram.ext import *
 from sentence_transformers import SentenceTransformer, util
-from telegram import ForceReply, replymarkup
-from telegram.inline.inlinekeyboardbutton import InlineKeyboardButton
-from waiting import wait
 from sklearn.metrics.pairwise import cosine_similarity
 import torch
 import database_utils as dbu

@@ -12,8 +12,6 @@ import pandas as pd
 import help as H
 import sentence_transf as S
 from dotenv import load_dotenv
-from waiting import wait
-
 
 '''
 load bot token and initialize bot
@@ -43,7 +41,8 @@ topics=dbu.get_topics()
 '''
 start lernen Command Handler
 aks which topic the user wants to learn
-return chosen Topic state
+Input: update, context
+Return: chosen Topic state
 '''
 def lernen(update, context):
     
@@ -59,9 +58,9 @@ def lernen(update, context):
 
 '''
 check which topic the user wants to learn
-pick random question out of this topic
-send question to user and force reply
-return Question state
+pick random question out of this topic and send question to user
+Input: update, context 
+Return: Question state
 '''
 def get_type(update, context):
     markup=ReplyKeyboardRemove()
@@ -90,7 +89,8 @@ check if user answerd to question or send question
 check answer or answer the question from user
 if cosinus similarty > 0.6 right answer else wrong answer
 aks if user wants continue to learn or stop or choose new topic
-return Answer state
+Input: update, context
+Return: Answer state
 '''
 def get_answer(update, context):
     data['answer']=update.message.text
@@ -99,19 +99,10 @@ def get_answer(update, context):
     
    
     for i in ["was", "wo", "wer", "wie", "wieso", "wofür", "wozu", "wohin", "warum", "wem", "woher","?"]:
-        #print ("for:", i)
         if i in answer:
-            #print("if", i)
             antwort=True
             S.get_answer(answer, update, bot)
             
-            # keyboard=[]
-            # a=["Ja", "Nein", "Neues Thema lernen"]
-            # for i in a:
-            #     keyboard.append([KeyboardButton(i)])
-            # markup=ReplyKeyboardMarkup(keyboard, resize_keyboard=True, one_time_keyboard=True)
-            # update.message.reply_text(text="Möchtest du die nächste Frage bekommen", reply_markup=markup)
-    
     if not antwort:
         if data['answer']=="/help":
                 path=True
@@ -150,6 +141,8 @@ def get_answer(update, context):
     
 '''
 check if user wants to continue learning --> call get_type to choose next question
+Input: update, context
+Return:
 if user wants to choose new topic --> call lernen
 or if user wants to end learning --> end Conversation handler
 '''
@@ -164,7 +157,10 @@ def next_question(update, context):
         update.message.reply_text('Lernen beendet', reply_markup=markup)
         return ConversationHandler.END
 
-'''cancel Conversation Handler'''
+'''
+cancel Conversation Handler
+Input: update, context
+'''
 def cancel(update, context):
     markup=ReplyKeyboardRemove()
     update.message.reply_text('Lernen beendet',reply_markup=markup)

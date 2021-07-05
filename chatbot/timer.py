@@ -17,7 +17,8 @@ REPETITION = 4
 
 '''define timer 
 ask for Timer Type
-Return Type state'''
+Input; update, context
+Return: Type state'''
 def timer(update, context):
     
     global data
@@ -33,7 +34,8 @@ def timer(update, context):
 '''get timer type
 if predefined timer start timer
 else aks for worktime
-return work state'''
+Input: update, context
+Return: work state'''
 def get_type(update,context):
     markup=ReplyKeyboardRemove()
     #print(f"Update  get type {update}")
@@ -74,7 +76,8 @@ def get_type(update,context):
 '''
 get defined worktime from user message
 ask for break time
-return break state
+Input: update, context
+Return: break state
 '''
 def get_work(update, context):
     
@@ -88,8 +91,9 @@ def get_work(update, context):
 
 '''
 get defined breaktime from user message
-ask for repetitions 
-return repetition state
+ask for repetitions
+Input: update, context 
+Return: repetition state
 '''
 def get_break(update, context):
     try:
@@ -99,10 +103,12 @@ def get_break(update, context):
         return REPETITION
     except:
         return cancel(update, context)
+
 '''
 get defined repetition number from user message
 start timer with defined numbers
-return End of Conversation Handler'''
+Input: update, context
+Return: End of Conversation Handler'''
 def get_repetition(update, context):
     try:
         data['wiederholungen'] = update.message.text
@@ -124,7 +130,8 @@ def get_repetition(update, context):
         return cancel(update, context)
 '''
 cancel timer Handler
-return End of Conversation Handler
+Input: update, context
+Return: End of Conversation Handler
 '''
 def cancel(update, context):
 
