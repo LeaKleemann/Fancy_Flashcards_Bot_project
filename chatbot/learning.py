@@ -1,4 +1,4 @@
-from typing import Text
+#from typing import Text
 from telegram import *
 from telegram.ext import * 
 import responses as R
@@ -10,6 +10,17 @@ import database_utils as dbu
 import check_answer_utils as cau
 import pandas as pd
 import help as H
+import sentence_transf as S
+from dotenv import load_dotenv
+from waiting import wait
+
+
+'''
+load bot token and initialize bot
+'''
+load_dotenv()
+token=os.getenv("TELEGRAM_BOT_TOKEN")
+bot=Bot(token)
 
 '''
 fach= chosen topic
@@ -70,7 +81,7 @@ def get_type(update, context):
     question=row.q
     data['question']=row.q
     data['sanswer'] = row.a
-    update.message.reply_text(text=question, reply_markup=ForceReply())
+    update.message.reply_text(text=data['question'])
     return QUESTION
 
 '''
@@ -83,31 +94,49 @@ return Answer state
 '''
 def get_answer(update, context):
     data['answer']=update.message.text
-    answer=data['answer']
-    if update.message.reply_to_message != None:
-        cossim=cau.compare_tensors(data['sanswer'], answer)
-        cossim=cossim[0]
-        
-        if cossim >=0.6:
-            text_part= "Glückwünsch deine Antwort ist richtig "+  "\U0001F973"
-            text_part2=text_part + "\U0001F913"
-            text=text_part2+ "\n" + "Das ist die Musterantwort:" + "\n" + str(data['sanswer'])
+    answer=data['answer'].lower()
+    antwort=False
+    
+   
+    for i in ["was", "wo", "wer", "wie", "wieso", "wofür", "wozu", "wohin", "warum", "wem", "woher","?"]:
+        #print ("for:", i)
+        if i in answer:
+            #print("if", i)
+            antwort=True
+            S.get_answer(answer, update, bot)
             
-            update.message.reply_text(text=text)
-            
-        else:
-            text_part= "Deine Antwort ist leider Falsch " + "\U0001F622"	
-            text_part2=text_part + "\U0001F61F	"
-            text=text_part2 + "\n" + "Das ist die Musterantwort:" + "\n" + str(data['sanswer'])
-            
-            update.message.reply_text(text=text)
-            
-    else:
+            # keyboard=[]
+            # a=["Ja", "Nein", "Neues Thema lernen"]
+            # for i in a:
+            #     keyboard.append([KeyboardButton(i)])
+            # markup=ReplyKeyboardMarkup(keyboard, resize_keyboard=True, one_time_keyboard=True)
+            # update.message.reply_text(text="Möchtest du die nächste Frage bekommen", reply_markup=markup)
+    
+    if not antwort:
         if data['answer']=="/help":
-            H.help(update, context)
-            return ConversationHandler.END
+                path=True
+                H.help(update, context, path)
+                return ConversationHandler.END
         else:
-            R.sample_responses(data['answer'], update, context)
+            
+            cossim=cau.compare_tensors(data['sanswer'], answer)
+            cossim=cossim[0]
+            
+            if cossim >=0.6:
+                text_part= "Glückwünsch deine Antwort ist richtig "+  "\U0001F973"
+                text_part2=text_part + "\U0001F913"
+                text=text_part2+ "\n" + "Das ist die Musterantwort:" + "\n" + str(data['sanswer'])
+                
+                update.message.reply_text(text=text)
+                
+            else:
+                text_part= "Deine Antwort ist leider Falsch " + "\U0001F622"	
+                text_part2=text_part + "\U0001F61F	"
+                text=text_part2 + "\n" + "Das ist die Musterantwort:" + "\n" + str(data['sanswer'])
+                
+                update.message.reply_text(text=text)
+            
+    
 
 
     keyboard=[]

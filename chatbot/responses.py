@@ -14,6 +14,7 @@ import help as H
 
 '''define timer, calculate worktime and breaktime'''
 def timer(update, context, data):
+    
     worktime=int(data['worktime'])
     breaktime=int(data['breaktime'])
     wiederholugnen=int(data['wiederholungen'])
@@ -92,7 +93,9 @@ def sample_responses(input_text, update, context):
     return None'''
     for i in ["was", "wo", "wer", "wie", "wieso", "wofür", "wozu", "wohin", "warum", "wem", "woher","?"]:
         if i in user_message:
+            
             S.get_answer(user_message, update, bot)
+            
             return None
         
     

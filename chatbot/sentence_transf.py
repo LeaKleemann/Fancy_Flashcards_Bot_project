@@ -5,6 +5,7 @@ from telegram.ext import *
 from sentence_transformers import SentenceTransformer, util
 from telegram import ForceReply, replymarkup
 from telegram.inline.inlinekeyboardbutton import InlineKeyboardButton
+from waiting import wait
 from sklearn.metrics.pairwise import cosine_similarity
 import torch
 import database_utils as dbu
@@ -20,6 +21,7 @@ output: answer to question if similarity is high, three nearest questions to cho
 
 answers=[]
 def get_answer(frage, update, bot):
+    
     '''calculate question embedding and calculate similarity to all questions from database'''
     query_embedding = model.encode(frage)
     cos_scores = util.pytorch_cos_sim(query_embedding, corpus_embeddings)[0]
@@ -31,6 +33,7 @@ def get_answer(frage, update, bot):
         an=embeddings['a'][int(top_results[1])]
         answer=answer+ "\n" + an 
         bot.send_message(chat_id=update.message.chat_id, text=answer)
+        
 
         '''low similarity: send three nearest questions and let user choose which answer should be sent'''
     else:
@@ -55,7 +58,7 @@ def get_answer(frage, update, bot):
                 
         reply_markup = InlineKeyboardMarkup(keyboard)
         '''send keyboard to user'''
-        update.message.reply_text('Please choose:', reply_markup=reply_markup)
+        update.message.reply_text('Wähle die Frage:', reply_markup=reply_markup)
 
     return None
 
@@ -70,4 +73,6 @@ def get_full_answer(query, update, bot):
     an=embeddings['a'][index]
     query.edit_message_text(text=f"Selected option: {q} \n Answer: {an}")
     answers.clear()
+   
     return None 
+

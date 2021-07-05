@@ -28,12 +28,7 @@ def read_emd():
     engine.dispose()
     return df
 
-modul=['business-intelligence', 'einfuehrung-in-die-wirtschaftsinformatik','Finanzbuchhaltung', 'finanzierung-und-investition', 'unternehmensfuehrung']
-load_dotenv()
-token=os.getenv("TELEGRAM_BOT_TOKEN")
 
-#initilize bot
-bot=Bot(token)
 
 '''define tokenizer for tfidf,
 input: message as string,
@@ -50,7 +45,7 @@ def spacy_tokenizer(message):
                 return_list.append(token.lemma_.lower())
     return return_list
 
-def get_distance(message, update, bot):
+def get_distance(message):
     message=[message]
     '''get questions from database'''
     df=read_emd()
@@ -64,21 +59,14 @@ def get_distance(message, update, bot):
     new_features = X.transform(message)
     '''calculate similarity to all questions'''
     cosine_sim = cosine_similarity(features, new_features)
-    bot.send_chat_action(chat_id=update.message.chat_id, action="typing")
     '''get maximum value'''  
     max_idx=cosine_sim.argmax()
-    best_question=all_questions[max_idx]
+    best_question=df['q'][max_idx]
     cosinus_wert=cosine_sim[max_idx]
+    return best_question, cosinus_wert
     
 
 
-    for x in modul:
-        modul_dict=fancy_flashcards[x]
-        answer=modul_dict.get(best_question)
-        if answer !=None:
-            answer_f=answer
-    
-    text="Gefundene Frage \n" + best_question + "\n\n" +"Antwort \n" + answer_f
-    bot.send_chat_action(chat_id=update.message.chat_id, action="cancel")
-    bot.send_message(chat_id=update.message.chat_id, text=text)
-    return None
+'''define and get similar question'''
+sentence="Was ist BI?"
+print(get_distance(sentence))

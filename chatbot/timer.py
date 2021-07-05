@@ -78,9 +78,13 @@ return break state
 '''
 def get_work(update, context):
     
-    data['worktime'] = update.message.text
-    update.message.reply_text(f"Arbeitszeit: {update.message.text}\nGebe jetzt deine Pausenzeit in Minuten ein")
-    return BREAK
+    try:
+        data['worktime'] = int(update.message.text)
+    #if str.isdigit(data['worktime']):
+        update.message.reply_text(f"Arbeitszeit: {update.message.text}\nGebe jetzt deine Pausenzeit in Minuten ein")
+        return BREAK
+    except:
+        return cancel(update, context)
 
 '''
 get defined breaktime from user message
@@ -88,37 +92,43 @@ ask for repetitions
 return repetition state
 '''
 def get_break(update, context):
-    
-    data['breaktime'] = update.message.text
-    update.message.reply_text(f"Pausenzeit: {update.message.text}\nGebe jetzt die Anzahl der Wiederholungen ein")
-    return REPETITION
-
+    try:
+        data['breaktime'] = int(update.message.text)
+    #if str.isdigit(data['worktime']):
+        update.message.reply_text(f"Pausenzeit: {update.message.text}\nGebe jetzt die Anzahl der Wiederholungen ein")
+        return REPETITION
+    except:
+        return cancel(update, context)
 '''
 get defined repetition number from user message
 start timer with defined numbers
 return End of Conversation Handler'''
 def get_repetition(update, context):
-    data['wiederholungen'] = update.message.text
-    msg = """Ich habe alle Daten
-Typ:{}
-Arbeitszeit: {}
-Pausenzeit: {}
-Wiederholungen: {}""".format(data['type'],data['worktime'], data['breaktime'], data['wiederholungen'])
+    try:
+        data['wiederholungen'] = update.message.text
+    #if str.isdigit(data['worktime']):
+        msg = """Ich habe alle Daten
+    Typ:{}
+    Arbeitszeit: {}
+    Pausenzeit: {}
+    Wiederholungen: {}""".format(data['type'],data['worktime'], data['breaktime'], data['wiederholungen'])
 
-    update.message.reply_text(msg)
-    x=threading.Thread(target=R.timer,args=(update, context, data))
-    update.message.reply_text(text="Timer gestartet")
-    x.start()
-        
+        update.message.reply_text(msg)
+        x=threading.Thread(target=R.timer,args=(update, context, data))
+        update.message.reply_text(text="Timer gestartet")
+        x.start()
+            
 
-    return ConversationHandler.END
+        return ConversationHandler.END
+    except:
+        return cancel(update, context)
 '''
 cancel timer Handler
 return End of Conversation Handler
 '''
 def cancel(update, context):
 
-    update.message.reply_text('beendet')
+    update.message.reply_text('Timer beendet')
 
     # end of conversation
     return ConversationHandler.END

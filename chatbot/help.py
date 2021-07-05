@@ -10,7 +10,7 @@ load_dotenv()
 token=os.getenv("TELEGRAM_BOT_TOKEN")
 bot=Bot(token)
 '''define help comand if user aks for help while he is in learning Command Handler'''
-def help(update, context):
+def help(update, context, path):
     text="Folgendes kannst du eingeben um mit dem Bot zu kommunizieren.\n"\
     "Wenn du Lernen möchtest gebe /lernen ein. Als erstes wirst du gefragt welches Deck " +u'📚'+ "du lernen möchtest."\
     "Über die automatisch erscheinenden Buttons kannst du das gewünschte Deck ganz einfach auswählen."\
@@ -31,4 +31,5 @@ def help(update, context):
     "Darauf folgt eine Pause von 5 min bzw. 10 min. Dieser Zyklus wird 2 mal wiederholt."\
     "Beim benutzerdefinierten Timer wirst du nach den jeweiligen Zeitintervallen und Wiederholungen gefragt. Antworte hier einfach mit deiner gewünschten Zahl."
     bot.send_message(chat_id=update.message.chat_id, text=text, parse_mode=ParseMode.HTML)
-    L.cancel(update, context)
+    if path:
+        L.cancel(update, context)
