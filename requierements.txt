@@ -1,5 +1,5 @@
 de-core-news-lg==3.0.0
-de-core-nes-sm==3.0.0
+de-core-news-sm==3.0.0
 nltk==3.5
 numpy==1.19.5
 pandas==1.2.5
@@ -11,10 +11,4 @@ sentence-transformers==1.2.0
 spacy==3.0.6
 SQLAlchemy==1.4.19
 torch==1.8.1
-
-
-time
-threading
-random
-pickle
 
