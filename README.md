@@ -45,7 +45,7 @@ Der Naive Bayes-Algorithmus kann für die Klassifikation von Texten verwendet we
 @Lea Aufbau Datenbank was für eine Datenbank ist das?
 
 ### Auslesen der Files von GitHub
-Um immer aktuell zu sein, lädt der Chatbot regelmäßig die aktuellen Decks von Github. Dafür wird das Python Package GitHub
+Um immer aktuell zu sein, lädt der Chatbot regelmäßig die aktuellen Decks von Github. Dafür wird das Python Package Github verwendet. Darüber kann auf Repositories und dessen Inhalt zugegriffen werden. Da das angefragte Repository öffentlich ist, muss keine Anmeldung erfolgen. Anschließend wird der Inhalt der verschiedenen Dateien ausgelesen und die Datenbank damit aktualisiert. Außerdem werden die embeddings neu berechnet und in der Datenbank gespeichert. 
 
 ## Installieren der Requirements
 Die Requirements können über `pip install -r requirements.txt` installiert werden.
@@ -63,6 +63,7 @@ Die Requirements können über `pip install -r requirements.txt` installiert wer
 -  Spacy Language Model (de-core-nes-sm/ de-core-nes-lg)
 - SQLAlchemy
 - Torch
+- Github
 
 
 ## Gruppenmitglieder
