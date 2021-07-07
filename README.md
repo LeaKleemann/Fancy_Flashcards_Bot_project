@@ -31,7 +31,8 @@ Der Bot kann wie folgt gestartet werden.
 1. Clonen des Repositories
 2. Installieren der Requierments (siehe [Requirements](Requirements))
 3. Installieren des Spacy Language Modells `python -m spacy download de_core_news_lg`
-4. Ausführen von `main.py` (`py main.py`)
+4. Anlegen einer .env Datei und initialisieren des Bot Tokens / In Telegram nach Fancy_Flashcards_bot suchen
+5. Ausführen von `main.py` (`py main.py`)
 
 ## Verwendete Modelle
 @Lea, Tamara beschreiben wo welche Modelle verwendet wurden
