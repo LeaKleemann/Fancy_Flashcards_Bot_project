@@ -30,7 +30,8 @@ Der Bot kann wie folgt gestartet werden.
 
 1. Clonen des Repositories
 2. Installieren der Requierments (siehe [Requirements](Requirements))
-3. Ausführen von `main.py` (`py main.py`)
+3. Installieren des Spacy Language Modells `python -m spacy download de_core_news_lg`
+4. Ausführen von `main.py` (`py main.py`)
 
 ## Verwendete Modelle
 @Lea, Tamara beschreiben wo welche Modelle verwendet wurden
@@ -60,7 +61,7 @@ Die Requirements können über `pip install -r requirements.txt` installiert wer
 - Scikit Learn
 - Sentence Transformer
 - Spacy 
--  Spacy Language Model (de-core-nes-sm/ de-core-nes-lg)
+-  Spacy Language Model (de-core-news-lg)
 - SQLAlchemy
 - Torch
 - Github
