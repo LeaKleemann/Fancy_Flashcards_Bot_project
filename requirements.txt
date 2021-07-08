@@ -9,4 +9,4 @@ sentence-transformers==1.2.0
 spacy==3.0.6
 SQLAlchemy==1.4.19
 torch==1.8.1
-
+PyGithub==1.55
