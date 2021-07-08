@@ -26,8 +26,9 @@ question= random question from bot
 answer= answer from the user
 sanswer= sample solution
 nextq=Should learning be continued
+atensor= Tensor of sample solution
 '''
-data = {'fach':"", 'question': "",  'answer': "", 'sanswer':"", 'nextq': ""}
+data = {'fach':"", 'question': "",  'answer': "", 'sanswer':"", 'nextq': "", 'atensor':""}
 topicdf=pd.DataFrame()
 
 '''define states for Handler'''
@@ -48,7 +49,7 @@ def lernen(update, context):
     
     global data
     keyboard=[]
-    data = {'fach':"", 'question': "", 'answer': "", 'sanswer':""}
+    #data = {'fach':"", 'question': "", 'answer': "", 'sanswer':"", 'atensor':""}
     
     for i in topics:
         keyboard.append([KeyboardButton(i)])
@@ -80,6 +81,7 @@ def get_type(update, context):
     question=row.q
     data['question']=row.q
     data['sanswer'] = row.a
+    data['atensor']=row.a_tensor
     update.message.reply_text(text=data['question'])
     return QUESTION
 
@@ -110,10 +112,10 @@ def get_answer(update, context):
                 return ConversationHandler.END
         else:
             
-            cossim=cau.compare_tensors(data['sanswer'], answer)
+            cossim=cau.compare_tensors(data['atensor'], answer)
             cossim=cossim[0]
             
-            if cossim >=0.6:
+            if cossim >=0.80:
                 text_part= "Glückwünsch deine Antwort ist richtig "+  "\U0001F973"
                 text_part2=text_part + "\U0001F913"
                 text=text_part2+ "\n" + "Das ist die Musterantwort:" + "\n" + str(data['sanswer'])
@@ -121,7 +123,7 @@ def get_answer(update, context):
                 update.message.reply_text(text=text)
                 
             else:
-                text_part= "Deine Antwort ist leider Falsch " + "\U0001F622"	
+                text_part= "Deine Antwort ist leider falsch oder unvollständig " + "\U0001F622"	
                 text_part2=text_part + "\U0001F61F	"
                 text=text_part2 + "\n" + "Das ist die Musterantwort:" + "\n" + str(data['sanswer'])
                 

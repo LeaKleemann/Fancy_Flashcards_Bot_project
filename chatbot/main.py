@@ -35,11 +35,10 @@ Input: update, context'''
 def start_command(update,  context):
     
     text="Herzlich Willkommen beim Fancy Flashcard Bot!"+ u'⚡'+" Mit Hilfe von diesem Bot kannst du auf eine neue Art deine Karteikarten lernen."\
-         + u'👩‍🎓' + u'👨‍🎓' + " Zum einen kannst du dem Bot Fragen stellen und er antwortet. Zum anderen ist es möglich, dass der Bot dir Fragen stellt.\
-              Über das Keyboard kannst du diese Frage beantworten. Der Bot überprüft deine Antwort und korrigiert dich gegebenenfalls. \nDu \
-                  benötigst Hilfe?" + u'❓'+" Gebe /help ein. \nDu willst Lernen." + u'🎓'+u'📚' \
-                       +  "Geben /lernen ein und wähle das Fach aus, welches du lernen möchtest. \nZusätzlich kannst du dir einen Timer stellen."\
-                            + u'⏱' +  "Den Timer startest du über /timer."
+        + u'👩‍🎓' + u'👨‍🎓' + " Zum einen kannst du dem Bot Fragen stellen und er antwortet. Zum anderen ist es möglich, dass der Bot dir Fragen stellt."\
+        "Über das Keyboard kannst du diese Frage beantworten. Der Bot überprüft deine Antwort und korrigiert dich gegebenenfalls. \nDu benötigst Hilfe?" + u'❓'+" Gib /help ein. \nDu willst Lernen?" + u'🎓'+u'📚' \
+        + "Gib /lernen ein und wähle das Fach aus, welches du lernen möchtest. \nZusätzlich kannst du dir einen Timer stellen."\
+        + u'⏱' +  "Den Timer startest du über /timer."
 
     bot.send_message(chat_id=update.message.chat_id, text=text)
 
@@ -48,6 +47,11 @@ Input: update, context'''
 def help_command(update,  context):
     path=False
     H.help(update,context,path)
+
+'''initialize cancel Command Handler, execution when user send message /cancel
+Input: update, context'''
+def cancel_command(update,  context):
+    T.cancel(update,context)
     
 
 '''initialize Buttons for question to decide which question the user means
@@ -135,6 +139,7 @@ def main():
     dp.add_handler(lernen_conversation_handler)
     dp.add_handler(CommandHandler("start", start_command))
     dp.add_handler(CommandHandler("help", help_command))
+    dp.add_handler(CommandHandler("cancel", cancel_command))
     dp.add_handler(CallbackQueryHandler(button))
     dp.add_handler(MessageHandler(Filters.text, handle_message))
     dp.add_error_handler(error)
