@@ -37,14 +37,17 @@ Der Bot kann wie folgt gestartet werden.
 ## Verwendete Modelle
 @Lea, Tamara beschreiben wo welche Modelle verwendet wurden
 question checker, sentence_transf, questiontfidt, check answer
-- Sentence Transformer
+- Sentence Transformer:
+Zum Überprüfen der durch den Nutzer gegebenen Antworten, werden die Antworten mit Hilfe des in der Library Sentence-Transformer enthaltenen Modells *paraphrase-multilingual-MiniLM-L12-v2* in Embeddings umgewandelt. Die Cosinus-Ähnlichkeit des Embeddings der Musterantwort und der vom Nutzer eingegebenen bildet die Grundlage für die Bewertung der Richtigkeit.
 - tf-idf:
 Bei tf-idf handelt es sich um einen Algorithmus, der einen oder mehrere Sätze als einen Vektor darstellt. In diesem Fall wurden Fragen repräsentiert. Wenn dies für mehrere Fragen durchgeführt wird, können die Abstände dieser Vektoren zueinander berechnet werden. Je kleiner die Abstände sind, desto ähnlicher sind sich die Fragen. Beim Chatbot wurde dieser Algorithmus verwendet, um die ähnlichste Frage zu der eingegeben zu ermitteln. Aufgrund der langen Rechenzeit wird dieser Algorithmus allerdings nicht mehr verwendet.
 - Naive Bayes:
 Der Naive Bayes-Algorithmus kann für die Klassifikation von Texten verwendet werden. Dabei wird die Wahrscheinlichkeit verschiedener Wörter gegeben der verschiedenen Klassen berechnet. Dadurch kann bei einem neuen zu klassifizierenden Text anhand der enthaltenen Wörter die Wahrscheinlicheiten der verschiedenen Klassen gegeben des Textes berechnet werden. Anschließend wird die wahrscheinlichste Klasse vorhergesagt. Beim Chatbot wurde der Algorithmus verwendet, um zu überprüfen ob es sich bei dem eingegeben Text um eine Frage handelt. Allerdings wird der Algorithmus aufgrund der unzuverlässigen Funktionsweise nicht verwendet.
 
 ## Datenbank
-@Lea Aufbau Datenbank was für eine Datenbank ist das?
+Um auf die Frage-und-Antwortpaare der Fancy-Flashcard-Anwendung zugreifen zu können, wurden diese aus dem Repository der Anwendung geladen und in einer sqlite-Datenbank gespeichert. In dieser werden die Fragen in einer Tabelle *cards* gespeichert. Diese Tabelle beinhaltet folgende Attribute: q (Frage, als string), a (Antwort, als string), a_tensor (Antwort, als in string umgewandelter Tensor). In einer weiteren Tabelle *questions* wird die Tensor-Representation aller Fragen abgespeichert. Diese Tabelle enthält nur ein Element. 
+
+Der Chatbot arbeitet auf Abfragen der Datenbank, welche als Pandas-DataFrames eingelesen werden und greift somit nicht direkt auf die Datenbank zu. Die Funktionen, über die dies implementiert ist, finden sich in `chatbot/database_utils.py`. Um die Datenbank mit zu aktualisieren, muss das Programm `create_database_from_github.py` gestartet werden. Dies greift auf das Fancy-Flashcards-Repository zu und überschreibt die alte Version der Datenbank. Zum derzeitigen Zeitpunkt greift der Bot nur auf die Fancy-Flashcards zum Thema Wirtschaftsinformatik zu.
 
 ### Auslesen der Files von GitHub
 Um immer aktuell zu sein, lädt der Chatbot regelmäßig die aktuellen Decks von Github. Dafür wird das Python Package Github verwendet. Darüber kann auf Repositories und dessen Inhalt zugegriffen werden. Da das angefragte Repository öffentlich ist, muss keine Anmeldung erfolgen. Anschließend wird der Inhalt der verschiedenen Dateien ausgelesen und die Datenbank damit aktualisiert. Außerdem werden die embeddings neu berechnet und in der Datenbank gespeichert. 
