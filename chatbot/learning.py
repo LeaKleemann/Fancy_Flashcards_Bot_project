@@ -41,7 +41,7 @@ topics=dbu.get_topics()
 
 '''
 start lernen Command Handler
-aks which topic the user wants to learn
+asks which topic the user wants to learn
 Input: update, context
 Return: chosen Topic state
 '''
@@ -54,7 +54,7 @@ def lernen(update, context):
     for i in topics:
         keyboard.append([KeyboardButton(i)])
     markup=ReplyKeyboardMarkup(keyboard, resize_keyboard=True, one_time_keyboard=True)
-    update.message.reply_text(text="Wähle das Fach das du lernen möchtst", reply_markup=markup)
+    update.message.reply_text(text="Wähle das Fach, das du lernen möchtest", reply_markup=markup)
     return TOPIC
 
 '''
@@ -89,8 +89,8 @@ def get_type(update, context):
 get answer from user
 check if user answerd to question or send question
 check answer or answer the question from user
-if cosinus similarty > 0.6 right answer else wrong answer
-aks if user wants continue to learn or stop or choose new topic
+if cosinus similarty > 0.8 right answer else wrong answer
+asks if user wants continue to learn or stop or choose new topic
 Input: update, context
 Return: Answer state
 '''
@@ -137,7 +137,7 @@ def get_answer(update, context):
     for i in a:
         keyboard.append([KeyboardButton(i)])
     markup=ReplyKeyboardMarkup(keyboard, resize_keyboard=True, one_time_keyboard=True)
-    update.message.reply_text(text="Möchtest du die nächste Frage bekommen", reply_markup=markup)
+    update.message.reply_text(text="Möchtest du die nächste Frage bekommen?", reply_markup=markup)
 
     return ANSWER
     

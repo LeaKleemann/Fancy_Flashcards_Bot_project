@@ -9,16 +9,16 @@ load_dotenv()
 token=os.getenv("TELEGRAM_BOT_TOKEN")
 bot=Bot(token)
 
-'''define help comand if user aks for help 
+'''define help command if user asks for help 
 check from which Handler the help function is called
-if the user ask for help out of the Learning Handler Learning Conversation Handler is canceld
+if the user asks for help out of the Learning Handler Learning Conversation Handler is canceled
 Input: update, context, path'''
 def help(update, context, path):
     text="Folgendes kannst du eingeben um mit dem Bot zu kommunizieren.\n"\
-    "Wenn du Lernen möchtest gebe /lernen ein. Als erstes wirst du gefragt welches Deck " +u'📚'+ "du lernen möchtest. "\
+    "Wenn du Lernen möchtest gib /lernen ein. Als erstes wirst du gefragt welches Deck " +u'📚'+ "du lernen möchtest. "\
     "Über die automatisch erscheinenden Buttons kannst du das gewünschte Deck ganz einfach auswählen. "\
     "Im Anschluss stellt dir der Bot eine zufällige Frage aus deinem gewähltem Deck. Diese Frage kannst du nun beantworten.\n"\
-    "Im nächsten Schritt kriegst du vom Bot eine Rückmeldung, ob deine Antwort richtig ist und wie die Musterlösung ist. "\
+    "Im nächsten Schritt kriegst du vom Bot eine Rückmeldung, ob deine Antwort richtig ist und wie die Musterlösung aussieht. "\
     "Außerdem wirst du gefragt, ob du weiter lernen möchtest, aufhören möchtest oder das Deck wechseln möchtest. Hier kannst du wieder über die Buttons antworten. "\
     "Solltest du Inhalte der Frage vom Bot nicht verstehen, tippe einfach deine Frage ein. "\
     "Der Bot antwortet dir nun auf deine Frage.\n"\

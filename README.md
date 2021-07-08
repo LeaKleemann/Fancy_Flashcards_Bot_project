@@ -39,7 +39,7 @@ Der Bot kann wie folgt gestartet werden.
 - Sentence Transformer:
 @Lea/Tamara wie funktioniert Sentence Transformer
   - Zum Überprüfen der durch den Nutzer gegebenen Antworten, werden die Antworten mit Hilfe des in der Library Sentence-Transformer enthaltenen Modells *paraphrase-multilingual-MiniLM-L12-v2* in Embeddings umgewandelt. Die Cosinus-Ähnlichkeit des Embeddings der Musterantwort und der vom Nutzer eingegebenen Antwort bildet die Grundlage für die Bewertung der Richtigkeit.
-  - @Tamara
+  - Die Library Sentence-Transform mit dem entsprechenden Modell *paraphrase-multilingual-MiniLM-L12-v2* wird ebenfalls verwendet, um die ähnlichste Frage zu ermitteln. Dabei werden alle in den Decks enthaltenen Fragen mit Hilfe des Modells in ein Embedding umgewandelt. Anschließend wird die Cosinus-Ähnlichkeit zwischen der eingegebenen Frage des Users und den in den Decks enthaltenen Fragen ermittelt. Dafür wird die von User eingegebe Frage ebenfalls mit Hilfe des Modells in ein Embedding umgewandelt.
 - tf-idf:
 Bei tf-idf handelt es sich um einen Algorithmus, der einen oder mehrere Sätze als einen Vektor darstellt. In diesem Fall wurden Fragen repräsentiert. Wenn dies für mehrere Fragen durchgeführt wird, können die Abstände dieser Vektoren zueinander berechnet werden. Je kleiner die Abstände sind, desto ähnlicher sind sich die Fragen. Beim Chatbot wurde dieser Algorithmus verwendet, um die ähnlichste Frage zu der eingegeben zu ermitteln. Aufgrund der langen Rechenzeit wird dieser Algorithmus allerdings nicht mehr verwendet.
 - Naive Bayes:
