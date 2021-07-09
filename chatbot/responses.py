@@ -61,10 +61,7 @@ def sample_responses(input_text, update, context):
     send answer to user
     return None'''
     if user_message in ("hello", "hi", "hallo"):       
-        bot.send_chat_action(chat_id=update.message.chat_id, action="typing")
-        time.sleep(1)
-        bot.send_chat_action(chat_id=update.message.chat_id, action="cancel")
-        text="Hey! Schön das du hier bist"+u'😃' + "\nFangen wir an zu lernen!"
+        text="Hey! Schön dass du hier bist "+u'😃' + "\nFangen wir an zu lernen!"
         bot.send_message(chat_id=update.message.chat_id, text=text)
         
         return None
@@ -73,22 +70,16 @@ def sample_responses(input_text, update, context):
     send answer to user
     return None'''
     if user_message in ("wer bist du", "wer bist du?"):
-        bot.send_chat_action(chat_id=update.message.chat_id, action="typing")
-        time.sleep(1)
-        bot.send_chat_action(chat_id=update.message.chat_id, action="cancel")
         text="Ich bin der Fancy Flashcard Bot" +u'⚡'+ "\nIch helfe dir beim lernen." + u'🎓'+u'📚' + " \nFür weitere Infos Tippe /help ein."
         bot.send_message(chat_id=update.message.chat_id, text=text)
         return None
 
     '''defined answer if user message is zeit or datum and send answer to user
     Return: None'''
-    if user_message in ("zeit", "datum"):
-        bot.send_chat_action(chat_id=update.message.chat_id, action="typing")
-        time.sleep(1)        
+    if user_message in ("zeit", "datum"):       
         now = datetime.now()
         date_time=now.strftime("%d/%m/%y, %H:%M:%S")
         date_time=str(date_time)
-        bot.send_chat_action(chat_id=update.message.chat_id, action="cancel")
         bot.send_message(chat_id=update.message.chat_id, text=date_time)
         return None
 
