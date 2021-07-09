@@ -72,7 +72,8 @@ Die Requirements können über `pip install -r requirements.txt` installiert wer
 
 ## Aufbau des Repositories
 Das Repository ist wie folgt aufgebaut.
-Im Ordner NLP Komponenten finden sich die implementierten NLP Funktionen die aufgrund der schlechteren Performance oder unzulässigkeit nicht verwendet wurden. Die Implementierung des Telegram Chatbots ist im Ordner chatbot. Lediglich die Datein `create_database_from_github.py`, zum automatischen auslesen des Repositories, ist keinem Ordner zugeordnet.
+
+Im Ordner NLP Komponenten finden sich die implementierten NLP Funktionen die aufgrund der schlechteren Performance oder Unzulässigkeit nicht verwendet wurden. Die Implementierung des Telegram Chatbots ist im Ordner chatbot. Lediglich die Datein `create_database_from_github.py`, zum automatischen auslesen des Repositories, ist keinem Ordner zugeordnet.
 
 ## Gruppenmitglieder
 - Lea Kleemann 4241182
