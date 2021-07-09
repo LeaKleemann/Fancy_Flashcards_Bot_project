@@ -65,15 +65,14 @@ Die Requirements können über `pip install -r requirements.txt` installiert wer
 - Scikit Learn
 - Sentence Transformer
 - Spacy 
--  Spacy Language Model (de-core-news-lg)
+- Spacy Language Model (de-core-news-lg)
 - SQLAlchemy
 - Torch
 - PyGithub
 
 ## Aufbau des Repositories
-Das Repository ist wie folgt aufgebaut.
-
-Im Ordner NLP Komponenten finden sich die implementierten NLP Funktionen die aufgrund der schlechteren Performance oder Unzulässigkeit nicht verwendet wurden. Die Implementierung des Telegram Chatbots ist im Ordner chatbot. Lediglich die Datein `create_database_from_github.py`, zum automatischen auslesen des Repositories, ist keinem Ordner zugeordnet.
+Das Repository ist wie folgt aufgebaut:
+Im Ordner NLP Komponenten finden sich die implementierten NLP Funktionen, die aufgrund der schlechteren Performance oder Unzulässigkeiten nicht verwendet wurden. Die Implementierung des Telegram Chatbots ist im Ordner chatbot. Lediglich die Datei `create_database_from_github.py`, zum automatischen auslesen des Repositories, ist keinem Ordner zugeordnet.
 
 ## Gruppenmitglieder
 - Lea Kleemann 4241182
@@ -83,7 +82,5 @@ Im Ordner NLP Komponenten finden sich die implementierten NLP Funktionen die auf
 ### Verteilung der Aufgaben:
 
 - Lea: NLP - Überprüfung der Antwort 
-
 - Tamara: NLP - Beantwortung von Fragen
-
 - Maria: Entwicklung des Telegram Chatbots
