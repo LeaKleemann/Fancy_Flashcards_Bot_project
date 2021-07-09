@@ -34,11 +34,11 @@ ANSWER=3
 Input: update, context'''
 def start_command(update,  context):
     
-    text="Herzlich Willkommen beim Fancy Flashcard Bot!"+ u'⚡'+" Mit Hilfe von diesem Bot kannst du auf eine neue Art deine Karteikarten lernen."\
-        + u'👩‍🎓' + u'👨‍🎓' + " Zum einen kannst du dem Bot Fragen stellen und er antwortet. Zum anderen ist es möglich, dass der Bot dir Fragen stellt."\
-        "Über das Keyboard kannst du diese Frage beantworten. Der Bot überprüft deine Antwort und korrigiert dich gegebenenfalls. \nDu benötigst Hilfe?" + u'❓'+" Gib /help ein. \nDu willst Lernen?" + u'🎓'+u'📚' \
-        + "Gib /lernen ein und wähle das Fach aus, welches du lernen möchtest. \nZusätzlich kannst du dir einen Timer stellen."\
-        + u'⏱' +  "Den Timer startest du über /timer."
+    text="Herzlich Willkommen beim Fancy Flashcard Bot! "+ u'⚡'+" Mit Hilfe von diesem Bot kannst du auf eine neue Art deine Karteikarten lernen."\
+        + u'👩‍🎓' + u'👨‍🎓' + " Zum einen kannst du dem Bot Fragen stellen und er antwortet dir. Zum anderen ist es möglich, dass der Bot dir Fragen stellt. "\
+        "Über das Keyboard kannst du diese Frage beantworten. Der Bot überprüft deine Antwort und korrigiert dich gegebenenfalls. \nDu benötigst Hilfe" + u'❓'+" Gib /help ein. \nDu willst Lernen?" + u'🎓'+u'📚' \
+        + "Gib /lernen ein und wähle das Fach aus, welches du lernen möchtest. \nZusätzlich kannst du dir einen Timer stellen. "\
+        + u'⏱' +  " Den Timer startest du über /timer."
 
     bot.send_message(chat_id=update.message.chat_id, text=text)
 

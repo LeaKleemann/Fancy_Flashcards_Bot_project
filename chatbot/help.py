@@ -19,13 +19,13 @@ def help(update, context, path):
     "Über die automatisch erscheinenden Buttons kannst du das gewünschte Deck ganz einfach auswählen. "\
     "Im Anschluss stellt dir der Bot eine zufällige Frage aus deinem gewähltem Deck. Diese Frage kannst du nun beantworten.\n"\
     "Im nächsten Schritt kriegst du vom Bot eine Rückmeldung, ob deine Antwort richtig ist und wie die Musterlösung aussieht. "\
-    "Außerdem wirst du gefragt, ob du weiter lernen möchtest, aufhören möchtest oder das Deck wechseln möchtest. Hier kannst du wieder über die Buttons antworten. "\
+    "Außerdem wirst du gefragt, ob du weiter lernen möchtest, aufhören möchtest oder das Deck wechseln möchtest. Hier kannst du wieder über die Buttons antworten. \n\n"\
     "Solltest du Inhalte der Frage vom Bot nicht verstehen, tippe einfach deine Frage ein. "\
     "Der Bot antwortet dir nun auf deine Frage.\n"\
     "Sollte sich der Bot nicht sicher sein welche Frage du meinst erscheinen Auswahlbuttons. "\
-    "Nach Auswahl der gewünschten Frage antwortet der Bot auf die gewählte Frage.\n"\
-    "Außerdem kannst du dir einen Timer" + u'⏱' + " stellen während du lernst. Der Timer basiert auf der Promodoro Technik. "\
-    "Über /timer kannst du den Timer starten. Du kannst aus vordefinierten Timern wählen oder deinen eigenen Timer einstellen. "\
+    "Nach Auswahl der gewünschten Frage antwortet der Bot auf die gewählte Frage.\n\n"\
+    "Außerdem kannst du dir einen Timer " + u'⏱' + " stellen während du lernst. Der Timer basiert auf der Promodoro Technik. "\
+    "Über /timer kannst du den Timer starten. Du kannst aus vordefinierten Timern wählen oder deinen eigenen Timer erstellen. "\
     "Die Auswahlmöglichkeiten erscheinen über Buttons. Bei den vordefinierten  Timern wurde eine Arbeitszeit von 25 min bzw. 50 min festgelegt. "\
     "Darauf folgt eine Pause von 5 min bzw. 10 min. Dieser Zyklus wird 2 mal wiederholt. "\
     "Beim benutzerdefinierten Timer wirst du nach den jeweiligen Zeitintervallen und Wiederholungen gefragt. Antworte hier einfach mit deiner gewünschten Zahl an Minuten."
