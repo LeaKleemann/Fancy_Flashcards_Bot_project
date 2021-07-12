@@ -28,8 +28,8 @@ def get_answer(frage, update, bot):
     if float(top_results[0]) >= 0.80:
         answer= embeddings["q"][int(top_results[1])]
         an=embeddings['a'][int(top_results[1])]
-        answer=answer+ "\n" + an 
-        bot.send_message(chat_id=update.message.chat_id, text=answer)
+        fullanswer=answer+ "\n" + an 
+        bot.send_message(chat_id=update.message.chat_id, text=fullanswer)
         
 
         '''low similarity: send three nearest questions and let user choose which answer should be sent'''
@@ -68,7 +68,7 @@ def get_full_answer(query, update, bot):
     index=int(answers[int(query.data)][2])
     q=str(answers[int(query.data)][0])
     an=embeddings['a'][index]
-    query.edit_message_text(text=f"Selected option: {q} \n Answer: {an}")
+    query.edit_message_text(text=f"{q} \n {an}")
     answers.clear()
    
     return None 

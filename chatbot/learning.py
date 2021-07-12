@@ -49,7 +49,8 @@ def lernen(update, context):
     
     global data
     keyboard=[]
-    #data = {'fach':"", 'question': "", 'answer': "", 'sanswer':"", 'atensor':""}
+    data = {'fach':"", 'question': "",  'answer': "", 'sanswer':"", 'nextq': "", 'atensor':""}
+    
     
     for i in topics:
         keyboard.append([KeyboardButton(i)])
@@ -81,6 +82,7 @@ def get_type(update, context):
     question=row.q
     data['question']=row.q
     data['sanswer'] = row.a
+    print(data['sanswer'])
     data['atensor']=row.a_tensor
     update.message.reply_text(text=data['question'])
     return QUESTION
@@ -98,9 +100,9 @@ def get_answer(update, context):
     data['answer']=update.message.text
     answer=data['answer'].lower()
     antwort=False
-    
+    print("jetzt")
    
-    for i in ["was", "wo", "wer", "wie", "wieso", "wofür", "wozu", "wohin", "warum", "wem", "woher","?"]:
+    for i in ["was ", "wo ", "wer ", "wie ", "wieso ", "wofür ", "wozu ", "wohin ", "warum ", "wem ", "woher "]:
         if i in answer:
             antwort=True
             S.get_answer(answer, update, bot)

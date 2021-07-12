@@ -70,7 +70,7 @@ def sample_responses(input_text, update, context):
     send answer to user
     return None'''
     if user_message in ("wer bist du", "wer bist du?"):
-        text="Ich bin der Fancy Flashcard Bot" +u'⚡'+ "\nIch helfe dir beim lernen." + u'🎓'+u'📚' + " \nFür weitere Infos Tippe /help ein."
+        text="Ich bin der Fancy Flashcard Bot" +u'⚡'+ "\nIch helfe dir beim lernen." + u'🎓'+u'📚' + " \nFür weitere Infos tippe /help ein."
         bot.send_message(chat_id=update.message.chat_id, text=text)
         return None
 
@@ -85,7 +85,7 @@ def sample_responses(input_text, update, context):
 
     '''if the user message is a question answer this with the help of sentence transf
     Return: None'''
-    for i in ["was", "wo", "wer", "wie", "wieso", "wofür", "wozu", "wohin", "warum", "wem", "woher","?"]:
+    for i in ["was ", "wo ", "wer ", "wie ", "wieso ", "wofür ", "wozu ", "wohin ", "warum ", "wem ", "woher "]:
         if i in user_message:
             
             S.get_answer(user_message, update, bot)

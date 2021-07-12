@@ -54,7 +54,6 @@ def read_data(topic):
     q=create_query(topic)
     query=pd.read_sql_query(create_query(topic), con=engine)
     df = pd.DataFrame(query)
-    print(df['a_tensor'][0])
     # df['q_tensor']=df.q_tensor.transform(transform_to_tensor)
     df['a_tensor']=df.a_tensor.transform(transform_to_tensor)
     conn.close()
@@ -75,7 +74,6 @@ def get_topics():
     queryt=pd.read_sql_query(querytopics, con=conn)
     dft = pd.DataFrame(queryt)
     topics=dft.topic.tolist()
-    print(topics)
     conn.close()
     engine.dispose()
     return topics  
@@ -105,10 +103,8 @@ def read_emd():
     engine = create_engine('sqlite:///'+db_file.as_posix(), echo=False)
     conn=engine.connect()
     fquery='''SELECT * FROM cards'''
-    #q=create_query("*")
     query=pd.read_sql_query(fquery, con=engine)
     df = pd.DataFrame(query)
-    # df['q_tensor']=df.q_tensor.transform(transform_to_tensor)
     df['a_tensor']=df.a_tensor.transform(transform_to_tensor)
     conn.close()
     engine.dispose()

@@ -42,7 +42,5 @@ def compare_tensors(solution,answer):
     #solution_tensor=get_tensor(solution)
     cosine_score = util.pytorch_cos_sim(solution, answer_tensor)[0] # get cosine-score
     top_results = torch.topk(cosine_score, k=1) # choose top result
-    print(cosine_score)
-    print(top_results)
     return top_results
 
