@@ -100,7 +100,7 @@ def get_answer(update, context):
     data['answer']=update.message.text
     answer=data['answer'].lower()
     antwort=False
-    print("jetzt")
+    
    
     for i in ["was ", "wo ", "wer ", "wie ", "wieso ", "wofür ", "wozu ", "wohin ", "warum ", "wem ", "woher "]:
         if i in answer:
