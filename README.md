@@ -22,7 +22,7 @@ Außerdem kann während des Lernens ein Timer gestellt werden. Der Timer basiert
 
 
 ## Programmierung des Bots
-Der Telegram Bot wurde mit Hilfe des Package Python-Telegram-Bot in Python programmiert. Die Kommunikation des Bots mit dem User basiert auf sogennanten Handlern. Dabei kann zwischen unterschiedliche Handler unterschieden werden. In diesem Programm wurde der Conversation Handler, Command Handler, Callback Query Handler sowie der Message Handler verwendet. Mit Hilfe des Conversation Handler kann eine Konversation definiert werden. Der Command Handler ruft festgelegte Funktionen auf. Dafür muss der User seine Nachricht mit einem / vor dem Text beginnen z.B. "/start". Durch den Callback Query Handler kann Feedback vom User direkt verarbeitet werden und basierend auf der Eingabe des Users wird die Konversation fortgeführt. Jeglicher Text der vom User eingegeben wird, wird vom Message Handler abgefangen und weiterverarbeitet.
+Der Telegram Bot wurde mit Hilfe des Package Python-Telegram-Bot in Python programmiert. Der Chatbot ist ein regelbasierter Chatbot. Die Kommunikation des Bots mit dem User basiert auf sogennanten Handlern. Dabei kann zwischen unterschiedliche Handler unterschieden werden. In diesem Programm wurde der Conversation Handler, Command Handler, Callback Query Handler sowie der Message Handler verwendet. Mit Hilfe des Conversation Handler kann eine Konversation definiert werden. Der Command Handler ruft festgelegte Funktionen auf. Dafür muss der User seine Nachricht mit einem / vor dem Text beginnen z.B. "/start". Durch den Callback Query Handler kann Feedback vom User direkt verarbeitet werden und basierend auf der Eingabe des Users wird die Konversation fortgeführt. Jeglicher Text der vom User eingegeben wird, wird vom Message Handler abgefangen und weiterverarbeitet. Innerhalb der jeweiligen Handler wird die Logik und der Verlauf der Kommunikation definiert.
 
 ## Bot starten
 Der Bot kann wie folgt gestartet werden.
@@ -32,7 +32,7 @@ Der Bot kann wie folgt gestartet werden.
 3. Installieren des Spacy Language Modells `python -m spacy download de_core_news_lg`
 4. Anlegen einer .env Datei und initialisieren des Bot Tokens 
 5. Ausführen von `main.py` (`py main.py`)
-6. In Telegram nach Fancy_Flashcards_bot suchen
+6. In Telegram nach fancy_flashcard_bot suchen
 
 Falls der Bot auf einem Server deployt ist muss lediglich Punkt 6 ausgeführt werden.
 
