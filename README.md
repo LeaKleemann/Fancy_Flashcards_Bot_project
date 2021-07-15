@@ -1,11 +1,11 @@
 # Fancy Flashcards Bot
 
 Der Fancy Flashcards Bot ist ein in Python implementierter Chatbot, der beim Lernen hilft. Der Bot basiert auf den [Fancy Flashcards](https://github.com/fancy-flashcard/ffc). Diese Idee wurde nun in einen Telegram Bot integriert. Der Bot verwendet die verfügbaren Decks der Fancy Flashcards. Einen genauen Überblick über die enthaltenen Decks im json-Format ist [hier](https://github.com/fancy-flashcard/deck-collection/tree/main/wirtschaftsinformatik) zu finden.
-Einen leichter zu lesenden Überblick gibt es [hier](https://github.com/michael-spengler/DHBW-Learning-Apps/blob/main/training-data.md).
+Einen leichter zu lesenden Überblick gibt es [hier](https://github.com/michael-spengler/DHBW-Learning-Apps/blob/main/training-data.md). Die Decks sind auf deutsch beinhalten aber englische Fachbegriffe.
 
 Es können Fragen an den Bot gesendet werden. Die gesendete Frage wird mit den in den Decks enthaltenen Fragen verglichen. Die am besten passende Frage wird ausgegeben und beantwortet. 
 Außerdem kann mit Hilfe des Bots gelernt werden. Dafür wird zunächst das gewünschte Deck gewählt. Anschließend stellt der Bot eine Frage. Die gegebene Antwort des Users wird überprüft. Der Bot gibt die Rückmeldung, ob die Antwort richtig ist oder nicht. Weiterhin gibt der Bot die Musterlösung zurück.
-Ein detailierte Beschreibung der Funktionsweise gibt es unter [Funktionsweise des Botes](Funktionsweise-des-Botes).
+Ein detailierte Beschreibung der Funktionsweise des Bots gibt es unter [Funktionsweise des Botes](Funktionsweise-des-Botes).
 
 ## Funktionsweise des Bots
 
@@ -22,7 +22,7 @@ Außerdem kann während des Lernens ein Timer gestellt werden. Der Timer basiert
 
 
 ## Programmierung des Bots
-Der Telegram Bot wurde mit Hilfe des Package Python-Telegram-Bot in Python programmiert. Der Chatbot ist ein regelbasierter Chatbot. Die Kommunikation des Bots mit dem User basiert auf sogennanten Handlern. Dabei kann zwischen unterschiedliche Handler unterschieden werden. In diesem Programm wurde der Conversation Handler, Command Handler, Callback Query Handler sowie der Message Handler verwendet. Mit Hilfe des Conversation Handler kann eine Konversation definiert werden. Der Command Handler ruft festgelegte Funktionen auf. Dafür muss der User seine Nachricht mit einem / vor dem Text beginnen z.B. "/start". Durch den Callback Query Handler kann Feedback vom User direkt verarbeitet werden und basierend auf der Eingabe des Users wird die Konversation fortgeführt. Jeglicher Text der vom User eingegeben wird, wird vom Message Handler abgefangen und weiterverarbeitet. Innerhalb der jeweiligen Handler wird die Logik und der Verlauf der Kommunikation definiert.
+Der Telegram Bot wurde mit Hilfe des Package Python-Telegram-Bot in Python programmiert. Der Chatbot ist ein regelbasierter Chatbot. Die Kommunikation des Bots mit dem User basiert auf sogennanten Handlern. Dabei kann zwischen unterschiedliche Handler unterschieden werden. In diesem Programm wurde der Conversation Handler, Command Handler, Callback Query Handler sowie der Message Handler verwendet. Mit Hilfe des Conversation Handler kann eine Konversation definiert werden. Der Command Handler ruft die festgelegte Funktionen auf. Dafür muss der User seine Nachricht mit einem / vor dem Text beginnen z.B. "/start". Durch den Callback Query Handler kann Feedback vom User direkt verarbeitet werden und basierend auf der Eingabe des Users wird die Konversation fortgeführt. Jeglicher Text der vom User eingegeben wird, wird vom Message Handler abgefangen und weiterverarbeitet. Innerhalb der jeweiligen Handler wird die Logik und der Verlauf der Kommunikation definiert.
 
 ## Bot starten
 Der Bot kann wie folgt gestartet werden.
@@ -30,7 +30,7 @@ Der Bot kann wie folgt gestartet werden.
 1. Clonen des Repositories
 2. Installieren der Requierments (siehe [Requirements](Requirements))
 3. Installieren des Spacy Language Modells `python -m spacy download de_core_news_lg`
-4. Anlegen einer .env Datei und initialisieren des Bot Tokens 
+4. Anlegen einer `.env` Datei und initialisieren des Bot Tokens 
 5. Ausführen von `main.py` (`py main.py`)
 6. In Telegram nach fancy_flashcard_bot suchen
 
@@ -39,9 +39,9 @@ Falls der Bot auf einem Server deployt ist muss lediglich Punkt 6 ausgeführt we
 ## Verwendete Modelle
 
 - Sentence Transformer:
-  - Sentence-Transformer ist ein Python-Framework, das vortrainierte Modelle und Tools zur Erstellung von Text-Embeddings bietet. In diesem Projekt wird sie vor allem genutzt, um Sentence-Embeddings aus den Fragen und Antworten der Flashcards zu erstellen. Das verwendete Modell ist mehrsprachig und liefert somit auch gute Ergebnisse auf Flashcards, die fremdsprachige Fachbegriffe beinhalten.
+  - Sentence-Transformer ist ein Python-Framework, das vortrainierte Modelle und Tools zur Erstellung von Text-Embeddings bietet. In diesem Projekt wird es vor allem genutzt, um Sentence-Embeddings aus den Fragen und Antworten der Flashcards zu erstellen. Das verwendete Modell ist mehrsprachig und liefert somit auch gute Ergebnisse auf Flashcards, die fremdsprachige Fachbegriffe beinhalten.
   - Zum Überprüfen der durch den Nutzer gegebenen Antworten, werden die Antworten mit Hilfe des in der Library Sentence-Transformer enthaltenen Modells *paraphrase-multilingual-MiniLM-L12-v2* in Embeddings umgewandelt. Die Cosinus-Ähnlichkeit des Embeddings der Musterantwort und der vom Nutzer eingegebenen Antwort bildet die Grundlage für die Bewertung der Richtigkeit.
-  - Die Library Sentence-Transform mit dem entsprechenden Modell *paraphrase-multilingual-MiniLM-L12-v2* wird ebenfalls verwendet, um die ähnlichste Frage zu ermitteln. Dabei werden alle in den Decks enthaltenen Fragen mit Hilfe des Modells in ein Embedding umgewandelt. Anschließend wird die Cosinus-Ähnlichkeit zwischen der eingegebenen Frage des Users und den in den Decks enthaltenen Fragen ermittelt. Dafür wird die von User eingegebe Frage ebenfalls mit Hilfe des Modells in ein Embedding umgewandelt.
+  - Die Library Sentence-Transformer mit dem entsprechenden Modell *paraphrase-multilingual-MiniLM-L12-v2* wird ebenfalls verwendet, um die ähnlichste Frage zu ermitteln. Dabei werden alle in den Decks enthaltenen Fragen mit Hilfe des Modells in ein Embedding umgewandelt. Anschließend wird die Cosinus-Ähnlichkeit zwischen der eingegebenen Frage des Users und den in den Decks enthaltenen Fragen ermittelt. Dafür wird die von User eingegebe Frage ebenfalls mit Hilfe des Modells in ein Embedding umgewandelt.
 - tf-idf:
 Bei tf-idf handelt es sich um einen Algorithmus, der einen oder mehrere Sätze als einen Vektor darstellt. In diesem Fall wurden Fragen repräsentiert. Wenn dies für mehrere Fragen durchgeführt wird, können die Abstände dieser Vektoren zueinander berechnet werden. Je kleiner die Abstände sind, desto ähnlicher sind sich die Fragen. Beim Chatbot wurde dieser Algorithmus verwendet, um die ähnlichste Frage zu der eingegeben zu ermitteln. Aufgrund der langen Rechenzeit wird dieser Algorithmus allerdings nicht mehr verwendet.
 - Naive Bayes:
@@ -53,7 +53,7 @@ Um auf die Frage-und-Antwortpaare der Fancy-Flashcard-Anwendung zugreifen zu kö
 Der Chatbot arbeitet auf Abfragen der Datenbank, welche als Pandas-DataFrames eingelesen werden und greift somit nicht direkt auf die Datenbank zu. Die Funktionen, über die dies implementiert ist, finden sich in `chatbot/database_utils.py`. Um die Datenbank mit zu aktualisieren, muss das Programm `create_database_from_github.py` gestartet werden. Dies greift auf das Fancy-Flashcards-Repository zu und überschreibt die alte Version der Datenbank. Zum derzeitigen Zeitpunkt greift der Bot nur auf die Fancy-Flashcards zum Thema Wirtschaftsinformatik zu.
 
 ### Auslesen der Files von GitHub
-Um immer aktuell zu sein, lädt der Chatbot regelmäßig die aktuellen Decks von Github. Dafür wird das Python Package Github verwendet. Darüber kann auf Repositories und dessen Inhalt zugegriffen werden. Da das angefragte Repository öffentlich ist, muss keine Anmeldung erfolgen. Anschließend wird der Inhalt der verschiedenen Dateien ausgelesen und die Datenbank damit aktualisiert. Außerdem werden die embeddings neu berechnet und in der Datenbank gespeichert. 
+Um immer aktuell zu sein, lädt der Chatbot regelmäßig die aktuellen Decks von Github. Dafür wird das Python Package Github verwendet. Darüber kann auf Repositories und dessen Inhalt zugegriffen werden. Da das angefragte Repository öffentlich ist, muss keine Anmeldung erfolgen. Anschließend wird der Inhalt der verschiedenen Dateien ausgelesen und die Datenbank damit aktualisiert. Außerdem werden die Embeddings neu berechnet und in der Datenbank gespeichert. 
 
 ## Installieren der Requirements
 Die Requirements können über `pip install -r requirements.txt` installiert werden.
