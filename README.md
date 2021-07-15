@@ -37,7 +37,7 @@ Der Bot kann wie folgt gestartet werden.
 Falls der Bot auf einem Server deployt ist muss lediglich Punkt 6 ausgeführt werden.
 
 ## Demo Video
-Eine Demo über die Funktionsweiße des Bots kann [hier angesehen werden](https://drive.google.com/file/d/1qu2TR3u6iV8gglVw3z7Ax7Sj4t2G-oSR/view?usp=sharing).
+Eine Demo über die Funktionsweiße des Bots kann [hier](https://drive.google.com/file/d/1qu2TR3u6iV8gglVw3z7Ax7Sj4t2G-oSR/view?usp=sharing) angesehen werden.
 
 ## Verwendete Modelle
 
